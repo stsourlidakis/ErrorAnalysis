@@ -24,14 +24,15 @@
 			<div class="title">Calculation of experimental error factors</div>
 			<div class="ErrorButtonsContainer">
 				<div class="button_header">Please select the type of error you wish to calculate: </div>
+
+				<div class="ErrorButtons" id="errorButton2">Standard Deviation</div>
+				<span class="infoIcons" id="infoIcon2"><img src="images/more.png" alt="info"></span>
+				
 				<div class="ErrorButtons" id="errorButton0">Error in a measurement</div>	
 				<span class="infoIcons" id="infoIcon0"><img src="images/more.png" alt="info"></span>
 				
 				<div class="ErrorButtons" id="errorButton1">Error in an average</div>
 				<span class="infoIcons" id="infoIcon1"><img src="images/more.png" alt="info"></span>
-				
-				<div class="ErrorButtons" id="errorButton2">Standard Deviation</div>
-				<span class="infoIcons" id="infoIcon2"><img src="images/more.png" alt="info"></span>
 				
 				<div class="ErrorButtons" id="errorButton3">Sources of error</div>
 			</div>
@@ -155,6 +156,10 @@
 				<div class="row">
 					<div class="p1">The standard deviation is:</div>
 					<div class="screen" id="2-screen-1"></div>
+				</div>
+				<div class="row">
+					<div class="p1">The maximum probable error is:</div>
+					<div class="screen" id="2-screen-2"></div>
 				</div>
 				<div class="2-questions row">
 					<div class="question_title">Is your mean value within the 1&sigma;, 2&sigma; or 3&sigma; of the standard deviation?</div>

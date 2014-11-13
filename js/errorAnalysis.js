@@ -39,11 +39,10 @@ $( document ).ready(function() {
 	$(".reset").click(function(){	//Reset error table input fields
 		reset_table($(this).closest('.ErrorContainer').attr('id'));
 	});
-	test();
 	//Hide all error tables,show the first one and set it as the active table
-	show_table(0);	//Must be placed after event handlers so table 0 can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive" 
+	show_table(2);	//Must be placed after event handlers so table 0 can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive" 
 	$("html").keypress(function(e){
-	  if(e.keyCode==9) {
+	  if(e.keyCode==9) {	//tab
 			test();
 		}
 	});
@@ -239,7 +238,9 @@ function calculateAverage(){
 
 function calculateDeviation()
 {	
+	var i, maxDevFromMean, _temp;
 	var table = 2;	//table id
+	var expValTable = 0;	//Table that contains the experimental value input field to be auto-filled.
 	if( !testInput(table) ){
 		alert("Invalid input\nOnly numerical values are allowed.\nFor decimal numbers please use \".\"\nIn order to separate values use \",\"\nMore than one values should be defined.");
 		return;
@@ -247,17 +248,27 @@ function calculateDeviation()
 	var values = document.getElementById(table+'-0').value.split(",");
 	var avg=0;
 	var avg1=0;
-	for (i = 0; i < values.length; i++){
+	for (i = 0; i < values.length; i++){	//Average calculation
 		values[i]=parseFloat(values[i]);
 		avg+=values[i];
 		}
 	avg/=values.length;
-	for (i = 0; i < values.length; i++){
+	for (i = 0; i < values.length; i++){	//Standar deviation calculation
 		avg1+=Math.pow(values[i]-avg,2);
 	}
 	avg1/=(values.length-1);
-	document.getElementById(table+'-screen'+'-0').innerHTML=avg.toFixed(3);
+	avg = avg.toFixed(3);
+	maxDevFromMean = Math.abs(avg-values[0]);	//Max probable error calculation
+	for (i = 1; i < values.length; i++){
+		_temp = Math.abs(avg-values[i]);
+		if( _temp > maxDevFromMean){
+			maxDevFromMean = _temp;
+		}
+	}
+	document.getElementById(table+'-screen'+'-0').innerHTML=avg;
+	document.getElementById(expValTable+'-1').value=avg;	
 	document.getElementById(table+'-screen'+'-1').innerHTML=Math.sqrt(avg1).toFixed(3);
+	document.getElementById(table+'-screen'+'-2').innerHTML= maxDevFromMean;	
 	
 	var questions = document.getElementsByClassName(table+"-questions");
 	for (var i=0;i<questions.length;i++)
@@ -275,7 +286,7 @@ function testInput(table){	//returns true for numerical values and false for eve
 	else
 	{
 		var values = document.getElementById(table+'-0').value.split(",");
-		for (i = 0; i < values.length; i++){
+		for (var i = 0; i < values.length; i++){
 			if(isNaN(values[i]) || values[i]=="" || values[i]==" " || values.length<2)return false;
 		}
 	}
