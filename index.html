@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			Error Analysis v0.8.4
+		</title>
+		
+		<link rel="stylesheet" type="text/css" href="./css/theme.css">
+		<link rel="stylesheet" type="text/css" href="./css/font-awesome-4.0.3/css/font-awesome.min.css">
+		<script type="text/javascript" charset="utf-8" src="./js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="http://graasp.epfl.ch/gadget/libs/jquery-1.8.0.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="./js/errorAnalysis.js"></script>
+		<script type="text/javascript" charset="utf-8" src="./js/carhartl-jquery-cookie-92b7715/jquery.cookie.js"></script>
+		<script type="text/javascript" charset="utf-8" src="./js/ActionLogger.js"></script>
+		<script type="text/javascript" charset="utf-8" src="./js/ils.js"></script>
+		<script type="text/javascript" charset="utf-8" src="./js/MetadataHandler.js"></script>
+		<script type="text/javascript" charset="utf-8" src="./js/utils.js"></script>
+		<script type="text/javascript" src="http://graasp.epfl.ch/ils_lib/main/ils.js"></script>
+		<script type="text/javascript" charset="utf-8" src="./js/FileSaver.js-master/FileSaver.js"></script>
+	</head>
+	<body>	
+		<div id="container">
+			<div class="title">Calculation of experimental error factors</div>
+			<div class="ErrorButtonsContainer">
+				<div class="button_header">Please select the type of error you wish to calculate: </div>
+				<div class="ErrorButtons" id="errorButton0">Error in a measurement</div>	
+				<span class="infoIcons" id="infoIcon0"><img src="images/more.png" alt="info"></span>
+				
+				<div class="ErrorButtons" id="errorButton1">Error in an average</div>
+				<span class="infoIcons" id="infoIcon1"><img src="images/more.png" alt="info"></span>
+				
+				<div class="ErrorButtons" id="errorButton2">Standard Deviation</div>
+				<span class="infoIcons" id="infoIcon2"><img src="images/more.png" alt="info"></span>
+				
+				<div class="ErrorButtons" id="errorButton3">Sources of error</div>
+			</div>
+			
+			<div class="ErrorContainer" id="0">
+				<div class="Error_title">Error in a measurement</div>
+				<div class="row">
+					<div class="p1">Insert the theoretical value</div>
+					<div><input type="text" id="0-0"></div>
+				</div>
+				<div class="row">
+					<div class="p1">Insert the experimental value</div>
+					<div><input type="text" id="0-1"></div>
+				</div>
+				<div class="row">
+					<div class="calculate">Calculate</div>
+					<div class="reset">Reset</div>
+				</div>
+				<div class="row">
+					<div class="p1">The absolute error is:</div>
+					<div class="screen" id="0-screen-0"></div>
+				</div>
+				<div class="row">
+					<div class="p1">The relative error is:</div>
+					<div class="screen" id="0-screen-1"></div>
+				</div>
+				<div class="row">
+					<div class="p1">The percentage error is:</div>
+					<div class="screen" id="0-screen-2"></div>
+				</div>
+				<div class="0-questions row">
+					<div class="question_title">Is your experimental value within the absolute error?</div>
+					<div class="form_elements">
+						<input type="radio" name="absolute_error_radio_0" value="yes" id="0-r-0" checked>Yes
+						<input type="radio" name="absolute_error_radio_0" value="no" id="0-r-1">No
+					</div>
+				</div>
+				<div class="0-questions row">
+					<div class="question_title">Do you regard your measurement to be correct?</div>
+					<div class="form_elements">
+						<input type="radio" name="absolute_error_radio_1" value="yes" id="0-r-2" checked>Yes
+						<input type="radio" name="absolute_error_radio_1" value="no" id="0-r-3">No
+					</div>
+				</div>
+				<div class="0-questions row">
+					<div class="question_title">Which sources of error do you think were there?</div>
+					<div class="form_elements">
+						<input type="checkbox" name="absolute_error_checkbox_0" value="Human_Error" id="0-cb-0">Human Error<br>
+						<input type="checkbox" name="absolutee_error_checkbox_1" value="Systematic_Error" id="0-cb-1">Systematic Error<br>
+						<input type="checkbox" name="absolute_error_checkbox_2" value="Random_Error" id="0-cb-2">Random Error	
+					</div>
+					<div class="save_element">
+						save
+						<div class="fa fa-save fontAweSomeButton fa-2x activeButton saveButtons"></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="ErrorContainer" id="1">
+				<div class="Error_title">Error in an average</div>
+					
+				<div class="row">
+					<div class="p1">Insert the standard error in each measurement</div>
+					<div><input type="text" id="1-0"></div>
+				</div>
+				<div class="row">
+					<div class="p1">Insert the number of values included in the average</div>
+					<div><input type="text" id="1-1"></div>
+				</div>
+				<div class="row">
+					<div class="calculate">Calculate</div>
+					<div class="reset">Reset</div>
+				</div>
+				<div class="row">
+					<div class="p1">The average error is:</div>
+					<div class="screen" id="1-screen"></div>
+				</div>
+				<div class="1-questions row">
+					<div class="question_title">Is your experimental value within the error in the average?</div>
+					<div class="form_elements">
+						<input type="radio" name="average_error_radio_0" value="yes" id="1-r-0" checked>Yes
+						<input type="radio" name="average_error_radio_0" value="no" id="1-r-1">No
+					</div>
+				</div>
+				<div class="1-questions row">
+					<div class="question_title">Do you regard your measurement to be correct?</div>
+					<div class="form_elements">
+						<input type="radio" name="average_error_radio_1" value="yes" id="1-r-2" checked>Yes
+						<input type="radio" name="average_error_radio_1" value="no" id="1-r-3">No
+					</div>
+				</div>
+				<div class="1-questions row">
+					<div class="question_title">Which sources of error do you think were there?</div>
+					<div class="form_elements">
+						<input type="checkbox" name="average_error_checkbox_0" value="Human_Error" id="1-cb-0">Human Error<br>
+						<input type="checkbox" name="average_error_checkbox_1" value="Systematic_Error" id="1-cb-1">Systematic Error<br>
+						<input type="checkbox" name="average_error_checkbox_2" value="Random_Error" id="1-cb-2">Random Error	
+					</div>
+					<div class="save_element">
+						save
+						<div class="fa fa-save fontAweSomeButton fa-2x activeButton saveButtons"></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="ErrorContainer" id="2">
+				<div class="Error_title">Standard Deviation</div>
+				
+				<div class="row">
+					<div class="p1">Insert each value you have measured separated by comma</div>
+					<div><input type="text" id="2-0"></div>
+				</div>
+				<div class="row">
+					<div class="calculate">Calculate</div>
+					<div class="reset">Reset</div>
+				</div>
+				<div class="row">
+					<div class="p1">The mean value is:</div>
+					<div class="screen" id="2-screen-0"></div>
+				</div>
+				<div class="row">
+					<div class="p1">The standard deviation is:</div>
+					<div class="screen" id="2-screen-1"></div>
+				</div>
+				<div class="2-questions row">
+					<div class="question_title">Is your mean value within the 1&sigma;, 2&sigma; or 3&sigma; of the standard deviation?</div>
+					<div class="form_elements">
+						<input type="radio" name="standard_deviation_radio_0" value="1sigma" id="2-r-0" checked>1&sigma;
+						<input type="radio" name="standard_deviation_radio_0" value="2sigma" id="2-r-1">2&sigma;
+						<input type="radio" name="standard_deviation_radio_0" value="3sigma" id="2-r-2">3&sigma;
+					</div>
+				</div>
+				<div class="2-questions row">
+					<div class="question_title">Do you regard your measurements to be correct?</div>
+					<div class="form_elements">
+						<input type="radio" name="standard_deviation_radio_1" value="yes" id="2-r-3" checked>Yes
+						<input type="radio" name="standard_deviation_radio_1" value="no" id="2-r-4">No
+					</div>
+				</div>
+				<div class="2-questions row">
+					<div class="question_title">Which sources of error do you think were there?</div>
+					<div class="form_elements">
+						<input type="checkbox" name="standard_deviation_checkbox_0" value="Human_Error" id="2-cb-0">Human Error<br>
+						<input type="checkbox" name="standard_deviation_checkbox_1" value="Systematic_Error" id="2-cb-1">Systematic Error<br>
+						<input type="checkbox" name="standard_deviation_checkbox_2" value="Random_Error" id="2-cb-2">Random Error	
+					</div>
+					<div class="save_element">
+						save
+						<div class="fa fa-save fontAweSomeButton fa-2x activeButton saveButtons"></div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="ErrorContainer" id="3">
+				<div class="Error_title"> What sources of error are there?</div>
+				There are three general types of errors which may distort experimental outcomes:
+				<ul>
+				<li> Human error</li>
+				<li> Systematic error</li>
+				<li> Random error</li>
+				</ul>
+				<b>Human errors</b> are mistakes made by the experimenter. Such mistakes may come up when for example the experimenter has made a miscalculation, misread the indications of an instrument or even if the experiment itself is not set up correctly. The accuracy of the experiment lies a great deal in eliminating human errors. The experimenter must be certain that the experiment worked properly and that all necessary factors have been taken into consideration. Human errors are not experimental errors.<br><br>
+				<b>Systematic error</b> is an error that occurs in all measurements of an experiment and it is due to the instrument or the experimental set up. Systematic errors effect all measurements in the same way, meaning either increasing or decreasing the value by the same amount. In order to produce an accurate result all systematic errors must be eliminated. The diminish of systematic errors can be done by changing experimental conditions or the experimental setup.<br>
+				Systematic errors are related to the precision of the instrument. For example, lets&apos;s assume that one attempts to measure the length of a straight line with a common ruler which has scaled divisions every 0,1cm. If the actual length of the line is 3,48 cm the experimenter would measure 3,5 cm. So, the precision of the measurement depends on the precision of the instrument. In the case of the line, the correct answer would be (3,5&plusmn;0,1) cm; meaning that the length of the line is between 3,4 and 3,6 cm. Thus, all measurements should be accompanied by an error factor, also called reading error, which corresponds to the smallest subdivision of the instrument.<br>
+				Another systematic error stems from the wrong calibration of an instrument. For example, if a speedometer has as initial value 10<sup>m/s</sup> instead of zero, than all measurements would have a systematic error of 10<sup>m/s</sup>.<br>
+				Systematic errors however, don&apos;t only occur due to the precision of instruments but also due to the experimental set up. If for example one is performing an experiment about the free fall of objects in a non-vacuum environment, then the resistance of air would produce a systematic error to all measurements. <br><br>
+				<b>Random errors</b> are errors that occur because when making repeated measurements during an experiment, it is practically impossible to reproduce the exact same conditions every time. Random errors usually cause small variations among measurements but some times a measurement may be too small or too big compared to the rest. Such measurements have to be excluded from the set of data. In order to reduce this kind of errors the experimenter should repeat the measurements as many times as possible.
+
+			</div>
+		
+			<div class="error_info" id="info-0">
+				<b>The absolute error</b> is the magnitude of the difference between the theoretical and the experimental value.
+				<br><br><img src="images/absolute_error_formula.png" alt="absolute_error_formula">
+				<br><br><b>The relative error</b> is the absolute error divided by the magnitude of the theoretical value. Ideally the relative error must be zero or very close to zero.
+				<br><br><img src="images/relative_error_formula.png" alt="relative_error_formula">
+				<br><br><b>The percentage error</b> is the relative error expressed in terms of percentage.
+				<br><br><img src="images/percentage_error_formula.png" alt="percentage_error_formula">
+			</div>
+			
+			<div class="error_info" id="info-1">
+				<b>Error in an average:</b>When repeating the same measurement a number of times, we produce a set of values and then the average value is calculated. Respectively, one must also calculate the average error.
+				<br><br><img src="images/average_error_formula.png" alt="average_error_formula">
+			</div>
+				
+			<div class="error_info" id="info-2">
+				<b>Standard deviation</b> is a statistical measurement that is used to illustrate the dispersion of the experiment's values relative to an average value or standard value. The bigger standard deviation is, the more scattered the data are.
+				<br><br><img src="images/standard_deviation_error_formula.png" alt="standard_deviation_error_formula">
+			</div>
+							
+			<div class="golablogo"><img width="100" height="89" src="images/Go-Lab.png" alt="Go-Lab logo"></div>
+		</div>
+	
+	</body>
+</html>

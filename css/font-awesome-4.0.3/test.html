@@ -1,0 +1,29 @@
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="golabStyle.css">
+<div onclick="download()">haaaaa</div>
+<script src="FileSaver.js-master/FileSaver.js"></script>
+<ul class="fa-ul">
+  <li><i class="fa-li fa fa-check-square"></i>List icons</li>
+  <li><i class="fa-li fa fa-check-square"></i>can be used</li>
+  <li><i class="fa-li fa fa-spinner fa-spin"></i>as bullets</li>
+  <li><i class="fa-li fa fa-square"></i>in lists</li>
+</ul>
+<i class="fa fa-upload fontAweSomeButton activeButton"></i>
+
+<!--<script>
+function aa(){
+var csvContent="aaaas"; //here we load our csv data 
+var blob = new Blob([csvContent],{
+    type: "text/csv;charset=utf-8;",
+});
+
+navigator.msSaveBlob(blob, "filename.csv");}
+</script>-->
+<script>
+function download() {
+	var s = "kalhmera";
+	var blob = new Blob([s], {type: "text/plain;charset=utf-8"});
+	
+	saveAs(blob, "hello world.txt");
+}
+</script>
