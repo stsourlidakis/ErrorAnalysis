@@ -35,12 +35,14 @@ $( document ).ready(function() {
 			calculateAverage();
 		else if(parent_id == 2)
 			calculateDeviation();
+		else if(parent_id == 4)
+			calculateMean();
 	});
 	$(".reset").click(function(){	//Reset error table input fields
 		reset_table($(this).closest('.ErrorContainer').attr('id'));
 	});
 	//Hide all error tables,show the first one and set it as the active table
-	show_table(2);	//Must be placed after event handlers so table 0 can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive" 
+	show_table(4);	//Must be placed after event handlers so table 0 can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive" 
 	$("html").keypress(function(e){
 	  if(e.keyCode==9) {	//tab
 			test();
@@ -157,7 +159,7 @@ function hide_table(id)
 }
 function toggle_info(id)
 {
-	if(id!=active)return;		//only toggle info on current table
+	if( (id!=active) && ( (id==3||id==4)&&active!=0 ) )return;		//only toggle info on current table
 	var element = document.getElementById('info-'+id);
 	document.getElementById('info-'+id).style.height = element.style.height=="0px"?"auto":"0px";
 	document.getElementById('info-'+id).style.opacity = element.style.opacity=="0"?"1":"0";
@@ -266,17 +268,38 @@ function calculateDeviation()
 		}
 	}
 	document.getElementById(table+'-screen'+'-0').innerHTML=avg;
-	document.getElementById(expValTable+'-1').value=avg;	
+	document.getElementById(expValTable+'-1').value=avg;
 	document.getElementById(table+'-screen'+'-1').innerHTML=Math.sqrt(avg1).toFixed(3);
-	document.getElementById(table+'-screen'+'-2').innerHTML= maxDevFromMean;	
+	document.getElementById(table+'-screen'+'-2').innerHTML= maxDevFromMean.toFixed(3);	
 	
 	var questions = document.getElementsByClassName(table+"-questions");
 	for (var i=0;i<questions.length;i++)
 		questions[i].style.display="";
 }
 
+function calculateMean(){
+	var i, avg, table=4;
+	var expValTable = 0;	//Table that contains the experimental value input field to be auto-filled.
+	var sdTable = 2;	//standard deviation table
+	if( !testInput(table) ){
+		alert("Invalid input\nOnly numerical values are allowed.\nFor decimal numbers please use \".\"\nIn order to separate values use \",\"\nMore than one values should be defined.");
+		return;
+	}
+	var values = document.getElementById(table+'-0').value.split(",");
+	var avg=0;
+	for (i = 0; i < values.length; i++){	//Average calculation
+		values[i]=parseFloat(values[i]);
+		avg+=values[i];
+		}
+	avg/=values.length;
+	document.getElementById(table+'-screen'+'-0').innerHTML=avg;
+	document.getElementById(sdTable+'-0').value = document.getElementById(table+'-0').value
+	document.getElementById(expValTable+'-1').value=avg;
+	show_table(expValTable);
+}
+
 function testInput(table){	//returns true for numerical values and false for everything else
-	if(table!=2)		//table 2 has only 1 form to check
+	if( (table!=2) && (table!=4) )		//table 2 has only 1 form to check
 	{
 		inputValue=document.getElementById(table+'-0').value;
 		if(isNaN(inputValue) || inputValue=="" || ( ( inputValue.indexOf(' ')==0 && inputValue.length-1==0 ) || ( inputValue.indexOf(' ')==inputValue.length-1 && inputValue.length-1==0 ) ) )return false;	//Third argument checks for a space but allows one at the start or the end of the number

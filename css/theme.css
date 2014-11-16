@@ -121,6 +121,18 @@ html{
 	margin-left: 3%;
 	margin-top: 5%;
 }
+#infoIcon3{
+	float:left;
+	cursor: pointer;
+	margin-left: -14%;
+	margin-top: 1.5%;	
+}
+#infoIcon4{
+	float:left;
+	cursor: pointer;
+	margin-left: -11%;
+	margin-top: 1.5%;	
+}
 
 .ErrorContainer{
 	width: 390px;
@@ -197,6 +209,7 @@ input[type=text] {
 	cursor: pointer;
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #faa519), color-stop(1, #fbb94b) );
 	background:-moz-linear-gradient( center top, #faa519 5%, #fbb94b 100% );
+    background: -ms-linear-gradient(top left, #faa519 5%, #fbb94b 100%);
 	border-radius: 7px;
 	margin: 0 0px 20px 0;
 	
@@ -232,7 +245,8 @@ input[type=text] {
 	height: 40px;
 	cursor: pointer;
 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #faa519), color-stop(1, #fbb94b) );
-	background:-moz-linear-gradient( center top, #faa519 5%, #fbb94b 100% );
+	background:-moz-linear-gradient( center top, #faa519 5%, #fbb94b 100% );	
+    background: -ms-linear-gradient(top left, #faa519 5%, #fbb94b 100%);
 	border-radius: 7px;
 	margin: 0 0px 20px 0;
 	

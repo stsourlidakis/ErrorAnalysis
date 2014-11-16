@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			Error Analysis v0.8.4
+			Error Analysis v0.8.5
 		</title>
 		
 		<link rel="stylesheet" type="text/css" href="./css/theme.css">
@@ -24,27 +24,31 @@
 			<div class="title">Calculation of experimental error factors</div>
 			<div class="ErrorButtonsContainer">
 				<div class="button_header">Please select the type of error you wish to calculate: </div>
-
-				<div class="ErrorButtons" id="errorButton2">Standard Deviation</div>
-				<span class="infoIcons" id="infoIcon2"><img src="images/more.png" alt="info"></span>
 				
-				<div class="ErrorButtons" id="errorButton0">Error in a measurement</div>	
+				<div class="ErrorButtons" id="errorButton4">Experimental values</div>
+				
+				<div class="ErrorButtons" id="errorButton0">Error in measurements</div>	
 				<span class="infoIcons" id="infoIcon0"><img src="images/more.png" alt="info"></span>
 				
 				<div class="ErrorButtons" id="errorButton1">Error in an average</div>
 				<span class="infoIcons" id="infoIcon1"><img src="images/more.png" alt="info"></span>
 				
+				<div class="ErrorButtons" id="errorButton2">Standard Deviation</div>
+				<span class="infoIcons" id="infoIcon2"><img src="images/more.png" alt="info"></span>
+				
 				<div class="ErrorButtons" id="errorButton3">Sources of error</div>
 			</div>
 			
 			<div class="ErrorContainer" id="0">
-				<div class="Error_title">Error in a measurement</div>
+				<div class="Error_title">Error in measurements</div>
 				<div class="row">
 					<div class="p1">Insert the theoretical value</div>
+					<span class="infoIcons" id="infoIcon3"><img src="images/more.png" alt="info"></span>
 					<div><input type="text" id="0-0"></div>
 				</div>
 				<div class="row">
 					<div class="p1">Insert the experimental value</div>
+					<span class="infoIcons" id="infoIcon4"><img src="images/more.png" alt="info"></span>
 					<div><input type="text" id="0-1"></div>
 				</div>
 				<div class="row">
@@ -188,6 +192,23 @@
 						<div class="fa fa-save fontAweSomeButton fa-2x activeButton saveButtons"></div>
 					</div>
 				</div>
+			</div>		
+			
+			<div class="ErrorContainer" id="4">
+				<div class="Error_title">Experimental values</div>
+				
+				<div class="row">
+					<div class="p1">Insert each value you have measured separated by comma</div>
+					<div><input type="text" id="4-0"></div>
+				</div>
+				<div class="row">
+					<div class="calculate">Calculate</div>
+					<div class="reset">Reset</div>
+				</div>
+				<div class="row">
+					<div class="p1">The mean value is:</div>
+					<div class="screen" id="4-screen-0"></div>
+				</div>
 			</div>
 			
 			<div class="ErrorContainer" id="3">
@@ -224,6 +245,16 @@
 			<div class="error_info" id="info-2">
 				<b>Standard deviation</b> is a statistical measurement that is used to illustrate the dispersion of the experiment's values relative to an average value or standard value. The bigger standard deviation is, the more scattered the data are.
 				<br><br><img src="images/standard_deviation_error_formula.png" alt="standard_deviation_error_formula">
+			</div>
+			
+			<div class="error_info" id="info-3">
+				The <b>theoretical value</b> of a quantity can refer to different things. If we are trying to verify a given theory than the theoretical value is the value derived from the respective mathematical equation.For example, let’s say we are performing an experiment to measure the time in which an object will reach the ground from a given height according to the laws of free fall. Then, the theoretical value will be the one derived from the equation<img src="images/theoritical_value_formula.png" alt="asdf">whereas the experimental value would be the one we actually measured during the experiment using a stop watch.
+				<br>
+				Another case is when we are measuring quantities whose value is already known from the bibliography. For example, let’s say we want to measure the density of glycerin. In that case, in our experiment we would be taking measurements of mass and volume and calculate the density using the equation<img src="images/density_formula.png" alt="asdf">The theoretical value would be the one derived from bibliography which is 1.261 g/cm<sup>3</sup>. 
+			</div>
+			
+			<div class="error_info" id="info-4">
+				<br><br>The <b>experimental value</b> is the one measured while performing an experiment. If you have collected a set of measurements, the experimental value is the mean of the set of measurements.
 			</div>
 							
 			<div class="golablogo"><img width="100" height="89" src="images/Go-Lab.png" alt="Go-Lab logo"></div>
