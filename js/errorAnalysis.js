@@ -42,7 +42,7 @@ $( document ).ready(function() {
 		reset_table($(this).closest('.ErrorContainer').attr('id'));
 	});
 	//Hide all error tables,show the first one and set it as the active table
-	show_table(4);	//Must be placed after event handlers so table 0 can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive" 
+	show_table(5);	//Must be placed after event handlers so table 0 can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive" 
 	$("html").keypress(function(e){
 	  if(e.keyCode==9) {	//tab
 			test();
@@ -159,10 +159,12 @@ function hide_table(id)
 }
 function toggle_info(id)
 {
-	if( (id!=active) && ( (id==3||id==4)&&active!=0 ) )return;		//only toggle info on current table
-	var element = document.getElementById('info-'+id);
-	document.getElementById('info-'+id).style.height = element.style.height=="0px"?"auto":"0px";
-	document.getElementById('info-'+id).style.opacity = element.style.opacity=="0"?"1":"0";
+	if(id==active || ( (id==3||id==4)&&active==0 ) )	//only toggle info on current table
+	{
+		var element = document.getElementById('info-'+id);
+		document.getElementById('info-'+id).style.height = element.style.height=="0px"?"auto":"0px";
+		document.getElementById('info-'+id).style.opacity = element.style.opacity=="0"?"1":"0";
+	}
 }
 function popupExplanation(id)
 {
