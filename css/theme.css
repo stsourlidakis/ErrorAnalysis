@@ -121,17 +121,14 @@ html{
 	margin-left: 3%;
 	margin-top: 5%;
 }
-#infoIcon3{
-	float:left;
+.p1 .infoIcons{	
+	float:none;
 	cursor: pointer;
-	margin-left: -14%;
-	margin-top: 1.5%;	
 }
-#infoIcon4{
-	float:left;
+.question_title .infoIcons{	
+	float:none;
 	cursor: pointer;
-	margin-left: -11%;
-	margin-top: 1.5%;	
+	margin: 0px;
 }
 
 .ErrorContainer{
@@ -176,8 +173,11 @@ html{
 	word-wrap:break-word;
 	float:left;
 	padding-top: 5px;
-	//padding-bottom: auto;
 }
+.wIcon{
+	margin-top: -8px;
+	}
+
 
 input[type=text] {
 	height: 28px;

@@ -44,13 +44,12 @@
 			<div class="ErrorContainer" id="0">
 				<div class="Error_title">Error in measurements</div>
 				<div class="row">
-					<div class="p1">Insert the theoretical value</div>
-					<span class="infoIcons" id="infoIcon3"><img src="images/more.png" alt="info"></span>
+					<div class="p1 wIcon">Insert the theoretical value <img src="images/more.png" alt="info" class="infoIcons" id="infoIconTheoreticalValue"></div>
+					<!-- <span class="infoIcons" id="infoIconTheoreticalValue"><img src="images/more.png" alt="info"></span> -->
 					<div><input type="text" id="0-0"></div>
 				</div>
 				<div class="row">
-					<div class="p1">Insert the experimental value</div>
-					<span class="infoIcons" id="infoIcon4"><img src="images/more.png" alt="info"></span>
+					<div class="p1 wIcon">Insert the experimental value <img src="images/more.png" alt="info" class="infoIcons" id="infoIconExperimentalValue"></div>
 					<div><input type="text" id="0-1"></div>
 				</div>
 				<div class="row">
@@ -77,10 +76,9 @@
 					</div>
 				</div>
 				<div class="0-questions row">
-					<div class="question_title">Do you regard your measurement to be correct?</div>
+					<div class="question_title">Is there a systematic error in your measurements? <img src="images/more.png" alt="info" class="infoIcons" id="infoIconSystematicError"></div>
 					<div class="form_elements">
-						<input type="radio" name="absolute_error_radio_1" value="yes" id="0-r-2" checked>Yes
-						<input type="radio" name="absolute_error_radio_1" value="no" id="0-r-3">No
+						<div><input type="text" id="0-t-0"></div>
 					</div>
 				</div>
 				<div class="0-questions row">
@@ -124,10 +122,9 @@
 					</div>
 				</div>
 				<div class="1-questions row">
-					<div class="question_title">Do you regard your measurement to be correct?</div>
+					<div class="question_title">Is there a systematic error in your measurements? <img src="images/more.png" alt="info" class="infoIcons" id="infoIconSystematicError"></div>
 					<div class="form_elements">
-						<input type="radio" name="average_error_radio_1" value="yes" id="1-r-2" checked>Yes
-						<input type="radio" name="average_error_radio_1" value="no" id="1-r-3">No
+						<div><input type="text" id="1-t-0"></div>
 					</div>
 				</div>
 				<div class="1-questions row">
@@ -176,10 +173,9 @@
 					</div>
 				</div>
 				<div class="2-questions row">
-					<div class="question_title">Do you regard your measurements to be correct?</div>
+					<div class="question_title">Is there a systematic error in your measurements? <img src="images/more.png" alt="info" class="infoIcons" id="infoIconSystematicError"></div>
 					<div class="form_elements">
-						<input type="radio" name="standard_deviation_radio_1" value="yes" id="2-r-3" checked>Yes
-						<input type="radio" name="standard_deviation_radio_1" value="no" id="2-r-4">No
+						<div><input type="text" id="2-t-0"></div>
 					</div>
 				</div>
 				<div class="2-questions row">
@@ -227,9 +223,7 @@
 				Another systematic error stems from the wrong calibration of an instrument. For example, if a speedometer has as initial value 10<sup>m/s</sup> instead of zero, than all measurements would have a systematic error of 10<sup>m/s</sup>.<br>
 				Systematic errors however, don&apos;t only occur due to the precision of instruments but also due to the experimental set up. If for example one is performing an experiment about the free fall of objects in a non-vacuum environment, then the resistance of air would produce a systematic error to all measurements. <br><br>
 				<b>Random errors</b> are errors that occur because when making repeated measurements during an experiment, it is practically impossible to reproduce the exact same conditions every time. Random errors usually cause small variations among measurements but some times a measurement may be too small or too big compared to the rest. Such measurements have to be excluded from the set of data. In order to reduce this kind of errors the experimenter should repeat the measurements as many times as possible.
-
-			</div>
-			
+			</div>			
 			<div class="ErrorContainer" id="5">
 				<div class="Error_title">Introduction</div>
 				When conducting an experiment using laboratory equipment and not simulations, the measurements of any physical quantity can never be 100% accurate. The deviation between an experimental value and the actual true value of a quantity can be due to many reasons which we usually refer to as ‘<i>error factors</i>’. Such factors can for example be the accuracy of the measuring tool, the experimental set-up used or random mistakes made by the experimenter.Let’s have a look at the following example.Say we are asked to measure the diameter of the ball in the image below. 
@@ -250,7 +244,21 @@
 				<br><br>
 				The “Calculation of experimental error factors” tool  will help you in calculating different types of errors so you can have a better assessment of your result when performing experiments.
 			</div>
-		
+			
+
+			<div class="error_info" id="info-SystematicError">
+				<b>Systematic errors</b> are errors which occur in all measurements when performing an experiment.
+				<br>
+				Before starting your experiment, you need check your instruments for possible zero error. To do that, set your instrument to zero and check its indication. Does it say zero or does it give another value? If so, that value is considered to be a systematic error and you will have to correct all your measurements by subtracting it.  
+			</div>
+			<div class="error_info" id="info-ExperimentalValue">
+				<br><br>The <b>experimental value</b> is the one measured while performing an experiment. If you have collected a set of measurements, the experimental value is the mean of the set of measurements.
+			</div>
+			<div class="error_info" id="info-TheoreticalValue">
+				The <b>theoretical value</b> of a quantity can refer to different things. If we are trying to verify a given theory than the theoretical value is the value derived from the respective mathematical equation.For example, let’s say we are performing an experiment to measure the time in which an object will reach the ground from a given height according to the laws of free fall. Then, the theoretical value will be the one derived from the equation<img src="images/theoritical_value_formula.png" alt="asdf">whereas the experimental value would be the one we actually measured during the experiment using a stop watch.
+				<br>
+				Another case is when we are measuring quantities whose value is already known from the bibliography. For example, let’s say we want to measure the density of glycerin. In that case, in our experiment we would be taking measurements of mass and volume and calculate the density using the equation<img src="images/density_formula.png" alt="asdf">The theoretical value would be the one derived from bibliography which is 1.261 g/cm<sup>3</sup>. 
+			</div>
 			<div class="error_info" id="info-0">
 				<b>The absolute error</b> is the magnitude of the difference between the theoretical and the experimental value.
 				<br><br><img src="images/absolute_error_formula.png" alt="absolute_error_formula">
@@ -259,27 +267,15 @@
 				<br><br><b>The percentage error</b> is the relative error expressed in terms of percentage.
 				<br><br><img src="images/percentage_error_formula.png" alt="percentage_error_formula">
 			</div>
-			
 			<div class="error_info" id="info-1">
 				<b>Error in an average:</b>When repeating the same measurement a number of times, we produce a set of values and then the average value is calculated. Respectively, one must also calculate the average error.
 				<br><br><img src="images/average_error_formula.png" alt="average_error_formula">
-			</div>
-				
+			</div>	
 			<div class="error_info" id="info-2">
 				<b>Standard deviation</b> is a statistical measurement that is used to illustrate the dispersion of the experiment's values relative to an average value or standard value. The bigger standard deviation is, the more scattered the data are.
 				<br><br><img src="images/standard_deviation_error_formula.png" alt="standard_deviation_error_formula">
 			</div>
 			
-			<div class="error_info" id="info-3">
-				The <b>theoretical value</b> of a quantity can refer to different things. If we are trying to verify a given theory than the theoretical value is the value derived from the respective mathematical equation.For example, let’s say we are performing an experiment to measure the time in which an object will reach the ground from a given height according to the laws of free fall. Then, the theoretical value will be the one derived from the equation<img src="images/theoritical_value_formula.png" alt="asdf">whereas the experimental value would be the one we actually measured during the experiment using a stop watch.
-				<br>
-				Another case is when we are measuring quantities whose value is already known from the bibliography. For example, let’s say we want to measure the density of glycerin. In that case, in our experiment we would be taking measurements of mass and volume and calculate the density using the equation<img src="images/density_formula.png" alt="asdf">The theoretical value would be the one derived from bibliography which is 1.261 g/cm<sup>3</sup>. 
-			</div>
-			
-			<div class="error_info" id="info-4">
-				<br><br>The <b>experimental value</b> is the one measured while performing an experiment. If you have collected a set of measurements, the experimental value is the mean of the set of measurements.
-			</div>
-							
 			<div class="golablogo"><img width="100" height="89" src="images/Go-Lab.png" alt="Go-Lab logo"></div>
 		</div>
 	

@@ -14,9 +14,6 @@ $( document ).ready(function() {
 	for (var i=0;i<n;i++)
 	{
 		reset_table(i);
-		/*questions = document.getElementsByClassName(i+"-questions");
-		for (j=0;j<questions.length;j++)
-			questions[j].style.display="none";	*/
 	}
 	$(".ErrorButtons").click(function(){	//Change displayed error table
 		show_table($(this).attr("id").replace("errorButton",""));
@@ -32,11 +29,11 @@ $( document ).ready(function() {
 		if(parent_id == 0)
 			calculateMeasurementError();
 		else if(parent_id == 1)
-			calculateAverage();
+			calculateAverageError();
 		else if(parent_id == 2)
-			calculateDeviation();
+			calculateStandardDeviation();
 		else if(parent_id == 4)
-			calculateMean();
+			calculateMeanValue();
 	});
 	$(".reset").click(function(){	//Reset error table input fields
 		reset_table($(this).closest('.ErrorContainer').attr('id'));
@@ -159,7 +156,7 @@ function hide_table(id)
 }
 function toggle_info(id)
 {
-	if(id==active || ( (id==3||id==4)&&active==0 ) )	//only toggle info on current table
+	if(id==active || isNaN(id))	//only toggle info for the current table 
 	{
 		var element = document.getElementById('info-'+id);
 		document.getElementById('info-'+id).style.height = element.style.height=="0px"?"auto":"0px";
@@ -223,7 +220,7 @@ function calculateMeasurementError()
 	logO.id = 'tbl_'+table;
 	actionLogger.log("start", logO);
 }
-function calculateAverage(){
+function calculateAverageError(){
 	var table = 1;	//table id
 	if( !testInput(table) ){
 		alert("Invalid input\nOnly numerical values are allowed.");
@@ -240,7 +237,7 @@ function calculateAverage(){
 	actionLogger.log("start", logO);
 }
 
-function calculateDeviation()
+function calculateStandardDeviation()
 {	
 	var i, maxDevFromMean, _temp;
 	var table = 2;	//table id
@@ -279,7 +276,7 @@ function calculateDeviation()
 		questions[i].style.display="";
 }
 
-function calculateMean(){
+function calculateMeanValue(){
 	var i, avg, table=4;
 	var expValTable = 0;	//Table that contains the experimental value input field to be auto-filled.
 	var sdTable = 2;	//standard deviation table
@@ -293,11 +290,10 @@ function calculateMean(){
 		values[i]=parseFloat(values[i]);
 		avg+=values[i];
 		}
-	avg/=values.length;
+	avg = (avg/values.length).toFixed(3);
 	document.getElementById(table+'-screen'+'-0').innerHTML=avg;
 	document.getElementById(sdTable+'-0').value = document.getElementById(table+'-0').value
 	document.getElementById(expValTable+'-1').value=avg;
-	show_table(expValTable);
 }
 
 function testInput(table){	//returns true for numerical values and false for everything else
