@@ -29,7 +29,6 @@ html{
 	font-size: 120%;
 	line-height:28px;
 }
-
 .ErrorButtonsContainer{
 	width: 270px;
 	float: left;
@@ -41,9 +40,9 @@ html{
 	width: 230px;
 	height: auto;
 	margin-bottom: 8px;
-	
-	font-weight: bold;	
-	
+	margin-top: 120px;
+	clear: both;
+	font-weight: bold;		
 }
 .ErrorButtons {
 	float: left;
@@ -114,6 +113,35 @@ html{
 	-o-user-select: none;
 	user-select: none;
 }
+.ErrorButtonsInactive {
+	float: left;
+	width: 150px;
+	height: 40px;
+	cursor: pointer;
+	background: #ADABB3;
+	border-radius: 3px;
+	margin: 4px 4px 5px 0;
+	
+	border: solid 0px #00bacc;
+	box-shadow: 2px 2px 19px #939597;
+	
+	color: #888;
+	line-height: 40px;
+	text-align: center;
+	
+	color: black;
+	
+	overflow: visible;
+	
+	font-size: 12px;
+	/* prevent selection of text inside keys */
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
 
 .infoIcons{
 	float:left;
@@ -124,6 +152,7 @@ html{
 .p1 .infoIcons{	
 	float:none;
 	cursor: pointer;
+	margin: 0;
 }
 .question_title .infoIcons{	
 	float:none;
@@ -173,11 +202,11 @@ html{
 	word-wrap:break-word;
 	float:left;
 	padding-top: 5px;
+	
 }
-.wIcon{
-	margin-top: -8px;
-	}
-
+.justify{
+text-align:justify;
+}
 
 input[type=text] {
 	height: 28px;
@@ -296,7 +325,6 @@ input[type=text] {
 	text-align: right;
 	letter-spacing: 1px;
 	
-	
 	float: right;
 }
 
@@ -350,4 +378,12 @@ input[type=text] {
 	width: 100%; 
 	height: auto;
 	float: left;
+}
+#ruler, #micrometer{
+    width:45%;
+    height: auto;
+}
+#ball5{
+	width: 10%;
+    height: auto;
 }
