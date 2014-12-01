@@ -200,43 +200,39 @@ function toggle_info(id)
 function reset_table(id)
 {
 	if(id == tables["Sources of error"])return;	//table 3 doesnt have any elements to reset.
-	/*var table = document.getElementById(id);
-	var elements = table.getElementsByTagName("input");
-	for (var i=0;i<(id==2?1:2);i++)//table 2 has only 1 input area to get cleared
-	{
-		elements[i].value="";
-	}*/
+	
 	$('#'+id+' input:text').val('');
-	/*var elements = table.getElementsByClassName("screen");
-	for (var i=0;i<elements.length;i++)
-	{
-		elements[i].innerHTML="";
-	}*/
 	$('#'+id+' .screen').html('');
-	/*var questions = document.getElementsByClassName(id+"-questions");
-	for (var i=0;i<questions.length;i++)
-		{
-			questions[i].style.display="none";
-		}*/
 	$('#'+id+' .'+id+'-questions').hide();
 	$('#'+id+' input:checkbox').removeAttr('checked');
 	//$('#'+id+' input:radio').attr("checked", true);
+	
 	if(id==tables["Experimental values"])
 	{
-		$('#4-screen-0').closest('.row').hide();	//hide "corrected set of measurement" screen.
-		$('#4-screen-1').closest('.row').find('.p1').html('The mean value is:');
+		$('#'+id+'-screen-0').closest('.row').hide();	//hide "corrected set of measurement" screen.
+		$('#'+id+'-screen-1').closest('.row').find('.p1').html('The mean value is:');
 	}
 	else if(id==tables["Error propagation"])	//error propagation input 
 	{
 		$(".propagationInp").prop('disabled', true);
 		$('#'+id+'-0').prop('disabled', false);
-		toggle_propagation_formula($('#'+id+'-0-0'));
+		toggle_propagation_formula($('#'+id+'-r-0'));
+		$('#'+id+'-n').closest('.row').hide();	//hide n power input.
 	}
 }
 function toggle_propagation_formula(pressedFormula)
 {
 	$('.active_propagation_formula').removeClass('active_propagation_formula');
 	$(pressedFormula).addClass('active_propagation_formula');
+	
+	if($(pressedFormula).attr('src')=='images/propagation_formulas_7.png')	//toggle n power input.
+	{
+		$('#'+tables["Error propagation"]+'-n').closest('.row').show();
+	}
+	else
+	{
+		$('#'+tables["Error propagation"]+'-n').closest('.row').hide();
+	}
 }
 function toggle_propagation_input(pressedInput)
 {
@@ -284,7 +280,7 @@ function toggle_propagation_input(pressedInput)
 function calculateMeasurementError()
 {
 	var table = 0;	//table id
-	if( !testInput(table) ){
+	if( !check_input(table) ){
 		alert("Invalid input\nOnly numerical values are allowed.");
 		return;
 	}
@@ -312,7 +308,7 @@ function calculateMeasurementError()
 function calculateAverageError()
 {
 	var table = 1;	//table id
-	if( !testInput(table) ){
+	if( !check_input(table) ){
 		alert("Invalid input\nOnly numerical values are allowed.");
 		return;
 	}
@@ -337,7 +333,7 @@ function calculateStandardDeviation()
 {
 	var i;
 	var table = 2;	//table id
-	if( !testInput(table) ){
+	if( !check_input(table) ){
 		alert("Invalid input\nOnly numerical values are allowed.\nFor decimal numbers please use \".\"\nIn order to separate values use space\nMore than one values should be defined.");
 		return;
 	}
@@ -372,7 +368,7 @@ function calculateMeanValue()
 		$('#4-1').val(0);
 		systematicError=0;
 	}
-	if( !testInput(table) ){
+	if( !check_input(table) ){
 		alert("Invalid input\nOnly numerical values are allowed.\nFor decimal numbers please use \".\"\nIn order to separate values use space\nMore than one values should be defined.");
 		return;
 	}
@@ -408,11 +404,40 @@ function calculateMeanValue()
 function calculateErrorPropagation()
 {
 	var table = tables["Error propagation"];
-	$('.active_propagation_formula').attr('id');
+	if( !check_input(table) ){
+		alert("Invalid input\nOnly numerical values are allowed.");
+		return;
+	}
+	var formula = $('.active_propagation_formula').attr('id').replace(table+'-r-','');
+	var result;
+	if(formula == 0)
+	{
+		var dX = +$('#'+table+'-0').val();
+		var cX = +$('#'+table+'-3').val();
+		$('#'+table+'-screen-0').html( (Math.abs(cX)*dX).toFixed(3) );
+	}
+	else if(formula == 1)
+	{
+		var dX = +$('#'+table+'-0').val();
+		var cX = +$('#'+table+'-3').val();
+		var dY = +$('#'+table+'-1').val();
+		var cY = +$('#'+table+'-4').val();
+		var dZ = +$('#'+table+'-2').val();
+		var cZ = +$('#'+table+'-5').val();
+		$('#'+table+'-screen-0').html( Math.sqrt( Math.abs(cX)*dX*dX + Math.abs(cY)*dY*dY + Math.abs(cZ)*dZ*dZ ).toFixed(3) );
+	}
+	else if(formula == 2)
+	{
+		
+	}
+	else if(formula == 3)
+	{
+		
+	}
 }
 
-function testInput(table)
-{	//returns true for numerical values and false for everything else
+function check_input(table)	//returns true for numerical values and false for everything else
+{
 
 	if(table==tables["Standard Deviation"])		//table 2 has only 1 form to check
 	{
@@ -429,16 +454,22 @@ function testInput(table)
 		for (var i = 0; i < values.length; i++){
 			if(isNaN(values[i]) || values[i]=="" || values[i]==" ")return false;
 		}
-		inputValue=document.getElementById(table+'-1').value;
+		var inputValue=document.getElementById(table+'-1').value;
 		if(isNaN(inputValue) || inputValue=="" || ( ( inputValue.indexOf(' ')==0 && inputValue.length-1==0 ) || ( inputValue.indexOf(' ')==inputValue.length-1 && inputValue.length-1==0 ) ) )return false;
 	}
 	else if(table==tables["Error propagation"])
 	{
-		
+		var values = $('.propagationInp:enabled').map(function(){
+		   return +$(this).val();	//+ in order to replace whitespace characters with zeroes
+		}).get();
+		if(values[0]==" ") return false;	// X can't be empty.
+		for (var i = 0; i < values.length; i++){
+			if(isNaN(values[i]) || values[i]===" ")return false;
+		}
 	}
 	else
 	{
-		inputValue=document.getElementById(table+'-0').value;
+		var inputValue=document.getElementById(table+'-0').value;
 		if(isNaN(inputValue) || inputValue=="" || ( ( inputValue.indexOf(' ')==0 && inputValue.length-1==0 ) || ( inputValue.indexOf(' ')==inputValue.length-1 && inputValue.length-1==0 ) ) )return false;	//Third argument checks for a space but allows one at the start or the end of the number
 		inputValue=document.getElementById(table+'-1').value;
 		if(isNaN(inputValue) || inputValue=="" || ( ( inputValue.indexOf(' ')==0 && inputValue.length-1==0 ) || ( inputValue.indexOf(' ')==inputValue.length-1 && inputValue.length-1==0 ) ) )return false;
