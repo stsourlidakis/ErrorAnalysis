@@ -1,5 +1,5 @@
 var active;	//id of active window
-var experimentalValuesDone=true;	//id of active window
+var experimentalValuesDone=false;	//id of active window
 var n;//# of error buttons/tables
 var tables = { 
 	"Error in a measurement": 0,
@@ -30,9 +30,9 @@ $( document ).ready(function(){
 	$(".infoIcons").click(function(){	//Show/hide error info/formula
 		toggle_info($(this).attr("id").replace("infoIcon",""));
 	});
-	$(".saveButtons").click(function(){	//Save output
+	/* $(".saveButtons").click(function(){	//Save output
 		getString($(this).closest('.ErrorContainer').attr('id'));
-	});
+	}); */
 	$(".calculate").click(function(){	//Show/hide error info/formula
 		var parent_id = $(this).closest('.ErrorContainer').attr('id');
 		if(parent_id == tables["Error in a measurement"])
@@ -43,21 +43,13 @@ $( document ).ready(function(){
 			calculateStandardDeviation();
 		else if(parent_id == tables["Experimental values"])
 			calculateMeanValue();
-		else if(parent_id == tables["Error propagation"])
-			calculateErrorPropagation();
 	});
 	$(".reset").click(function(){	//Reset error table input fields
 		reset_table($(this).closest('.ErrorContainer').attr('id'));
 	});
-	$(".propagationInp").on("change keyup paste", function(){	//Reset error table input fields
-		toggle_propagation_input(this);
-	});
-	$(".propagation_formula").click(function(){	//Select propagation error formula
-		toggle_propagation_formula(this);
-	});
 	//Hide all error tables,show the first one and set it as the active table
-	show_table(6);	//Must be placed after event handlers so table 0 can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive"	
-	// disable_error_buttons();
+	show_table(tables["Experimental values"]);	//Must be placed after event handlers so table 0 can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive"	
+	disable_error_buttons();
 	$("html").keypress(function(e){
 	  if(e.keyCode==9) {	//tab
 			var _temp=+'        312. 123';
@@ -144,62 +136,27 @@ function test(){
 	  })
 	
 }
-
 function show_table(id)
 {
 	if(active==id)return;	//don't try to show an already active error table
-	if( !experimentalValuesDone && (id==0||id==1||id==2||id==6) )return;
+	if( $('#errorButton'+id ).hasClass('ErrorButtonsInactive') )return;
 	for (var i=0;i<n;i++){	//hide all error tables and set their button on the inactive class
 		if(id!=i)hide_table(i);
 	}
 	hide_info();
 	document.getElementById(id).style.display = "block";
 	document.getElementById("errorButton"+id).className = "ErrorButtonsActive";
-	active=id;
-	
-}
-function hide_info()
-{
-	var elements = document.getElementsByClassName("error_info");
-	for (var i=0;i<elements.length;i++)
-	{
-		elements[i].style.height="0px";
-		elements[i].style.opacity="0";
-	}
+	active=id;	
 }
 function hide_table(id)
 {
 	document.getElementById(id).style.display = "none";
-	if( experimentalValuesDone || (id!=0&&id!=1&&id!=2) )document.getElementById("errorButton"+id).className = "ErrorButtons";
-	
+	if( !$('#errorButton'+id ).hasClass('ErrorButtonsInactive') )document.getElementById("errorButton"+id).className = "ErrorButtons";
 	if(id==active)active=-1;
-}
-function disable_error_buttons()
-{
-	document.getElementById("errorButton0").className = "ErrorButtonsInactive";
-	document.getElementById("errorButton1").className = "ErrorButtonsInactive";
-	document.getElementById("errorButton2").className = "ErrorButtonsInactive";
-	document.getElementById("errorButton6").className = "ErrorButtonsInactive";
-}
-function enable_error_buttons()
-{
-	document.getElementById("errorButton0").className = "ErrorButtons";
-	document.getElementById("errorButton1").className = "ErrorButtons";
-	document.getElementById("errorButton2").className = "ErrorButtons";
-	document.getElementById("errorButton6").className = "ErrorButtons";
-}
-function toggle_info(id)
-{
-	if(id==active || isNaN(id))	//only toggle info for the current table 
-	{
-		var element = document.getElementById('info-'+id);
-		document.getElementById('info-'+id).style.height = element.style.height=="0px"?"auto":"0px";
-		document.getElementById('info-'+id).style.opacity = element.style.opacity=="0"?"1":"0";
-	}
 }
 function reset_table(id)
 {
-	if(id == tables["Sources of error"])return;	//table 3 doesnt have any elements to reset.
+	if( (id == tables["Sources of error"]) || (id == tables["Error propagation"]) )return;	//Skip tables that doesn't have any elements to reset.
 	
 	$('#'+id+' input:text').val('');
 	$('#'+id+' .screen').html('');
@@ -212,70 +169,50 @@ function reset_table(id)
 		$('#'+id+'-screen-0').closest('.row').hide();	//hide "corrected set of measurement" screen.
 		$('#'+id+'-screen-1').closest('.row').find('.p1').html('The mean value is:');
 	}
-	else if(id==tables["Error propagation"])	//error propagation input 
+}
+function hide_info()
+{
+	var elements = document.getElementsByClassName("error_info");
+	for (var i=0;i<elements.length;i++)
 	{
-		$(".propagationInp").prop('disabled', true);
-		$('#'+id+'-0').prop('disabled', false);
-		toggle_propagation_formula($('#'+id+'-r-0'));
-		$('#'+id+'-n').closest('.row').hide();	//hide n power input.
+		elements[i].style.height="0px";
+		elements[i].style.opacity="0";
 	}
 }
-function toggle_propagation_formula(pressedFormula)
+function toggle_info(id)
 {
-	$('.active_propagation_formula').removeClass('active_propagation_formula');
-	$(pressedFormula).addClass('active_propagation_formula');
-	
-	if($(pressedFormula).attr('src')=='images/propagation_formulas_7.png')	//toggle n power input.
+	if(id==active || isNaN(id))	//only toggle info for the current table 
 	{
-		$('#'+tables["Error propagation"]+'-n').closest('.row').show();
-	}
-	else
-	{
-		$('#'+tables["Error propagation"]+'-n').closest('.row').hide();
+		var element = document.getElementById('info-'+id);
+		document.getElementById('info-'+id).style.height = element.style.height=="0px"?"auto":"0px";
+		document.getElementById('info-'+id).style.opacity = element.style.opacity=="0"?"1":"0";
 	}
 }
-function toggle_propagation_input(pressedInput)
+function disable_error_buttons()
 {
-	var table = $(pressedInput).closest('.ErrorContainer').attr('id');
-	var id = +$(pressedInput).attr('id').replace(table+"-","");
-	var nOfInputs = $('.propagationInp').length
-	if(id<nOfInputs/2)	//prevent changes when constants are added
-	{
-		var value = $(pressedInput).val();
-		var newStatus = isNaN(value)||value==''||value.indexOf(' ') >= 0;	//true stands for disabled
-		if(newStatus)	//Disable every input area after this one in case they were enabled before and the user deleted the content
-		{
-			if(id!=(nOfInputs/2)-1)	//last element doesn't have anything to activate other than the constant input.
-			{
-				for (var i=id;i<(nOfInputs/2);i++)
-				{
-					$('#'+table+'-'+(i+nOfInputs/2)).prop('disabled', newStatus);
-					$('#'+table+'-'+(i+nOfInputs/2)).val('');
-					if(i+1<nOfInputs/2)
-					{
-						$('#'+table+'-'+(i+1)).prop('disabled', newStatus);
-						$('#'+table+'-'+(i+1)).val('');
-					}
-				}
-			}
-			else
-			{
-				$('#'+table+'-'+(parseInt(id)+nOfInputs/2)).prop('disabled', newStatus);
-			}
-		}
-		else
-		{
-			if(id!=(nOfInputs/2)-1)	//last element doesn't have anything to activate other than the constant input.
-			{
-				$('#'+table+'-'+(parseInt(id)+1)).prop('disabled', newStatus);
-				$('#'+table+'-'+(parseInt(id)+nOfInputs/2)).prop('disabled', newStatus);
-			}
-			else
-			{
-				$('#'+table+'-'+(parseInt(id)+nOfInputs/2)).prop('disabled', newStatus);
-			}
-		}
-	}
+	/* document.getElementById("errorButton0").className = "ErrorButtonsInactive";
+	document.getElementById("errorButton1").className = "ErrorButtonsInactive";
+	document.getElementById("errorButton2").className = "ErrorButtonsInactive";
+	document.getElementById("errorButton6").className = "ErrorButtonsInactive"; */
+ 	var id;
+	$('.ErrorButtons').each(function(){
+		id = $(this).attr('id');
+		if( (id!='errorButton'+tables["Sources of error"]) && (id!='errorButton'+tables["Experimental values"]) && (id!='errorButton'+tables["Introduction"]) && (id!='errorButton'+tables["Error propagation"]) )
+			document.getElementById(id).className = "ErrorButtonsInactive";
+	});
+}
+function enable_error_buttons()
+{
+ 	/* document.getElementById("errorButton0").className = "ErrorButtons";
+	document.getElementById("errorButton1").className = "ErrorButtons";
+	document.getElementById("errorButton2").className = "ErrorButtons";
+	document.getElementById("errorButton6").className = "ErrorButtons"; */
+ 	var id;
+	$('.ErrorButtonsInactive').each(function(){
+		id = $(this).attr('id');
+		if( (id!='errorButton'+tables["Sources of error"]) && (id!='errorButton'+tables["Experimental values"]) && (id!='errorButton'+tables["Introduction"]) && (id!='errorButton'+tables["Error propagation"]) )
+			document.getElementById(id).className = "ErrorButtons";
+	});
 }
 function calculateMeasurementError()
 {
@@ -401,41 +338,6 @@ function calculateMeanValue()
 	enable_error_buttons();
 }
 
-function calculateErrorPropagation()
-{
-	var table = tables["Error propagation"];
-	if( !check_input(table) ){
-		alert("Invalid input\nOnly numerical values are allowed.");
-		return;
-	}
-	var formula = $('.active_propagation_formula').attr('id').replace(table+'-r-','');
-	var result;
-	if(formula == 0)
-	{
-		var dX = +$('#'+table+'-0').val();
-		var cX = +$('#'+table+'-3').val();
-		$('#'+table+'-screen-0').html( (Math.abs(cX)*dX).toFixed(3) );
-	}
-	else if(formula == 1)
-	{
-		var dX = +$('#'+table+'-0').val();
-		var cX = +$('#'+table+'-3').val();
-		var dY = +$('#'+table+'-1').val();
-		var cY = +$('#'+table+'-4').val();
-		var dZ = +$('#'+table+'-2').val();
-		var cZ = +$('#'+table+'-5').val();
-		$('#'+table+'-screen-0').html( Math.sqrt( Math.abs(cX)*dX*dX + Math.abs(cY)*dY*dY + Math.abs(cZ)*dZ*dZ ).toFixed(3) );
-	}
-	else if(formula == 2)
-	{
-		
-	}
-	else if(formula == 3)
-	{
-		
-	}
-}
-
 function check_input(table)	//returns true for numerical values and false for everything else
 {
 
@@ -456,16 +358,6 @@ function check_input(table)	//returns true for numerical values and false for ev
 		}
 		var inputValue=document.getElementById(table+'-1').value;
 		if(isNaN(inputValue) || inputValue=="" || ( ( inputValue.indexOf(' ')==0 && inputValue.length-1==0 ) || ( inputValue.indexOf(' ')==inputValue.length-1 && inputValue.length-1==0 ) ) )return false;
-	}
-	else if(table==tables["Error propagation"])
-	{
-		var values = $('.propagationInp:enabled').map(function(){
-		   return +$(this).val();	//+ in order to replace whitespace characters with zeroes
-		}).get();
-		if(values[0]==" ") return false;	// X can't be empty.
-		for (var i = 0; i < values.length; i++){
-			if(isNaN(values[i]) || values[i]===" ")return false;
-		}
 	}
 	else
 	{
