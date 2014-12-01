@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			Error Analysis v0.8.6
+			Error Analysis v0.8.7
 		</title>
 		
 		<link rel="stylesheet" type="text/css" href="./css/theme.css">
@@ -40,6 +40,9 @@
 				
 				<div class="ErrorButtons" id="errorButton1">Error in an average</div>
 				<span class="infoIcons" id="infoIcon1"><img src="images/more.png" alt="info"></span>
+				
+				<div class="ErrorButtons" id="errorButton6">Error propagation</div>
+				<span class="infoIcons" id="infoIcon6"><img src="images/more.png" alt="info"></span>
 			</div>
 			
 			<div class="ErrorContainer" id="0">
@@ -247,6 +250,62 @@
 				</div>
 			</div>
 			
+			<div class="ErrorContainer" id="6">
+				<div class="Error_title">Error propagation</div>
+						
+				<div class="row">
+					<div class="p1">
+						Please insert the error for each quantity you have measured
+						<img src="images/more.png" alt="info" class="infoIcons" id="infoIconPropagationValues">
+					</div>				
+					<div>
+						<input type="text" class="propagationInp" id="6-0" placeholder="&delta;x">
+						<input type="text" class="propagationInp" id="6-1" placeholder="&delta;y" disabled>
+						<input type="text" class="propagationInp" id="6-2" placeholder="&delta;z" disabled>
+					</div>
+				</div>
+				<div class="row">
+					<div class="p1">
+						Check the equation you are using. Add the value of your constant(s)<br>(if any).
+					</div>
+					<div>
+						<input type="text" class="propagationInp" id="6-3" placeholder="Cx" disabled> 
+						<input type="text" class="propagationInp" id="6-4" placeholder="Cy" disabled>
+						<input type="text" class="propagationInp" id="6-5" placeholder="Cz" disabled>
+					</div>
+				</div>
+				<div class="row">
+					<div>
+						<br>
+						Please select the type of your equation
+						<br>
+						<div class="form_elements">
+							<div class="clear">
+								<img src="images/propagation_formulas_1.png" alt="propagation_formula" class="propagation_formula active_propagation_formula" id="6-r-0">
+							</div>
+							<div class="clear">
+								<img src="images/propagation_formulas_9.png" alt="propagation_formula" class="propagation_formula" id="6-r-1">
+							</div>
+							<div class="clear">
+								<img src="images/propagation_formulas_10.png" alt="propagation_formula" class="propagation_formula" id="6-r-2">
+								<img src="images/propagation_formulas_7.png" alt="propagation_formula" class="propagation_formula" id="6-r-3">
+							</div>
+							<div class="propagationNone infoIcons" id="infoIconPropagationNoneOfTheAbove">
+								<b>None of the above.</b>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="calculate">Calculate</div>
+					<div class="reset">Reset</div>
+				</div>
+				<div class="row">
+					<div class="p1">The propagated error is:</div>
+					<div class="screen" id="6-screen-0"></div>
+				</div>
+			</div>
+			
 
 			<div class="error_info" id="info-SystematicError">
 				<br>
@@ -288,6 +347,53 @@
 			<div class="error_info" id="info-4">
 				The <b>maximum probable error</b> is the maximum deviation from the mean.
 				<br><br><img src="images/maximum_probable_error_formula.png" alt="maximum_probable_error_formula">
+			</div>
+			<div class="error_info" id="info-PropagationNoneOfTheAbove">
+				Equations that are more complicate compared to the types mentioned above are beyond the scope of this tool. In order to calculate the propagated error of such an equation, you need to be in position to compute the derivative of that equation. 
+				<br><br>
+			</div>
+			<div class="error_info" id="info-PropagationValues">
+				If you have calculated a mean value, then the error is the standard deviation. If you have an individual measurement the error is usually the lowest indication of your instrument.
+				<br><br>
+			</div>
+			<div class="error_info justify" id="info-6">
+				<b>Error propagation</b>
+				<br>
+				When making an experiment, it is often the case that we can't measure directly the quantity we want. Instead, we measure other ones that when combined, provide us with the desired quantity. For example we cannot measure the density of a material directly. To achieve that, we have to take measurements of mass and volume and then use the formula <img src="images/density_formula.png" alt="density_formula"> to calculate the density. So, what is the error of a measurement in such a case?
+				<br>
+				The error of our measurement depends on the combination of the individual measurements, or in other words in the type of formula we are using. Thus we have to use each case separately. In all the cases below we refer to 'A' as the quantity we seek to measure through other quantities; x, y, z as the measured quantities A depends up on; and 'c' is a given constant. So in our previous example A would be the density and x,y would be the mass and volume respectively while we have no z and no c in our equation. Respectively the errors for each quantity are &delta;Α, &delta;x, &delta;y and &delta;z.
+				<br><br>
+				<u>Multiplication with a constant</u>
+				<br>
+				If A is the product of multiplying a quantity with a constant (called 'c') 
+				<br><img src="images/propagation_formulas_1.png" alt="propagation_formula">
+				<br>
+				Then the error &delta;Α for A is
+				<br><img src="images/propagation_formulas_2.png" alt="propagation_formula">
+				<br><br>
+				<u>Addition or subtraction of measured quantities</u>
+				<br>
+				If A is the sum or difference of x, y and z (it makes no difference whether we have '+' or '-')
+				<br><img src="images/propagation_formulas_3.png" alt="propagation_formula">
+				<br>
+				Then the error &delta;Α for A  is
+				<br><img src="images/propagation_formulas_4.png" alt="propagation_formula">
+				<br><br>
+				<u>Multiplication or division of measured quantities</u>
+				<br>
+				If A is the product of x,y and z (it makes no difference if it is multiplication or division) and a constant c (if there is no constant in your equation just set c=1)
+				<br><img src="images/propagation_formulas_5.png" alt="propagation_formula">
+				<br>
+				Then the error &delta;Α for A is
+				<br><img src="images/propagation_formulas_6.png" alt="propagation_formula">
+				<br><br>
+				<u>Polynomial functions</u>
+				<br>
+				If A is a polynomial function of one variable, x (c again being a constant)
+				<br><img src="images/propagation_formulas_7.png" alt="propagation_formula">
+				<br>
+				Then the error &delta;Α for A is
+				<br><img src="images/propagation_formulas_8.png" alt="propagation_formula">
 			</div>
 			
 			<div class="golablogo"><img width="100" height="89" src="images/Go-Lab.png" alt="Go-Lab logo"></div>

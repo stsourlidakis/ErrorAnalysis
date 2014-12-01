@@ -1,15 +1,23 @@
 var active;	//id of active window
-var experimentalValuesDone=false;	//id of active window
+var experimentalValuesDone=true;	//id of active window
 var n;//# of error buttons/tables
-var tableName = ["Error in a measurement", "Error in an average", "Standard Deviation", "sources of error"];
+var tables = { 
+	"Error in a measurement": 0,
+	"Error in an average": 1,
+	"Standard Deviation": 2,
+	"Sources of error": 3,
+	"Experimental values": 4,
+	"Introduction": 5,
+	"Error propagation": 6
+	};
 var logO = {
     "objectType": "test",
     "id": "hm_13",
     "content": "error analysis"
-  }
+ };
 var actionLogger;
 var hypothesisToolMetadataHandler;
-$( document ).ready(function() {
+$( document ).ready(function(){ 
 	n = document.getElementsByClassName("ErrorContainer").length;
 	//var questions;
 	for (var i=0;i<n;i++)
@@ -27,24 +35,33 @@ $( document ).ready(function() {
 	});
 	$(".calculate").click(function(){	//Show/hide error info/formula
 		var parent_id = $(this).closest('.ErrorContainer').attr('id');
-		if(parent_id == 0)
+		if(parent_id == tables["Error in a measurement"])
 			calculateMeasurementError();
-		else if(parent_id == 1)
+		else if(parent_id == tables["Error in an average"])
 			calculateAverageError();
-		else if(parent_id == 2)
+		else if(parent_id == tables["Standard Deviation"])
 			calculateStandardDeviation();
-		else if(parent_id == 4)
+		else if(parent_id == tables["Experimental values"])
 			calculateMeanValue();
+		else if(parent_id == tables["Error propagation"])
+			calculateErrorPropagation();
 	});
 	$(".reset").click(function(){	//Reset error table input fields
 		reset_table($(this).closest('.ErrorContainer').attr('id'));
 	});
+	$(".propagationInp").on("change keyup paste", function(){	//Reset error table input fields
+		toggle_propagation_input(this);
+	});
+	$(".propagation_formula").click(function(){	//Select propagation error formula
+		toggle_propagation_formula(this);
+	});
 	//Hide all error tables,show the first one and set it as the active table
-	show_table(5);	//Must be placed after event handlers so table 0 can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive"	
-	disable_error_buttons();
+	show_table(6);	//Must be placed after event handlers so table 0 can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive"	
+	// disable_error_buttons();
 	$("html").keypress(function(e){
 	  if(e.keyCode==9) {	//tab
-			test();
+			var _temp=+'        312. 123';
+			//	console.log(isNaN(' '));//test();
 		}
 	});
 });
@@ -131,7 +148,7 @@ function test(){
 function show_table(id)
 {
 	if(active==id)return;	//don't try to show an already active error table
-	if( !experimentalValuesDone && (id==0||id==1||id==2) )return;
+	if( !experimentalValuesDone && (id==0||id==1||id==2||id==6) )return;
 	for (var i=0;i<n;i++){	//hide all error tables and set their button on the inactive class
 		if(id!=i)hide_table(i);
 	}
@@ -162,12 +179,14 @@ function disable_error_buttons()
 	document.getElementById("errorButton0").className = "ErrorButtonsInactive";
 	document.getElementById("errorButton1").className = "ErrorButtonsInactive";
 	document.getElementById("errorButton2").className = "ErrorButtonsInactive";
+	document.getElementById("errorButton6").className = "ErrorButtonsInactive";
 }
 function enable_error_buttons()
 {
 	document.getElementById("errorButton0").className = "ErrorButtons";
 	document.getElementById("errorButton1").className = "ErrorButtons";
 	document.getElementById("errorButton2").className = "ErrorButtons";
+	document.getElementById("errorButton6").className = "ErrorButtons";
 }
 function toggle_info(id)
 {
@@ -178,15 +197,9 @@ function toggle_info(id)
 		document.getElementById('info-'+id).style.opacity = element.style.opacity=="0"?"1":"0";
 	}
 }
-function popupExplanation(id)
-{
-	if(id==0) alert("Absolute error:\nThe absolute error is the magnitude of the difference between the theoretical and the experimental value.\n\nRelative error:\nThe relative error is the absolute error divided by the magnitude of the theoretical value. Ideally the relative error must be zero or very close to zero.\n\nPercentage error:\nThe percent error is the relative error expressed in terms of percentage.");
-	if(id==1) alert("Error in an average:\nWhen repeating the same measurement a number of times, we produce a set of values and then the average value is calculated. Respectively, one must also calculate the average error.");
-	if(id==2) alert("Standard Deviation:\nStandard deviation is a statistical measurement that is used to illustrate the dispersion of the experiment's values relative to an average value or standard value. The bigger standard deviation is, the more scattered the data are.");
-}
 function reset_table(id)
 {
-	if(id == 3)return;	//table 3 doesnt have any elements to reset.
+	if(id == tables["Sources of error"])return;	//table 3 doesnt have any elements to reset.
 	/*var table = document.getElementById(id);
 	var elements = table.getElementsByTagName("input");
 	for (var i=0;i<(id==2?1:2);i++)//table 2 has only 1 input area to get cleared
@@ -208,9 +221,64 @@ function reset_table(id)
 	$('#'+id+' .'+id+'-questions').hide();
 	$('#'+id+' input:checkbox').removeAttr('checked');
 	//$('#'+id+' input:radio').attr("checked", true);
-	if(id==4){
+	if(id==tables["Experimental values"])
+	{
 		$('#4-screen-0').closest('.row').hide();	//hide "corrected set of measurement" screen.
 		$('#4-screen-1').closest('.row').find('.p1').html('The mean value is:');
+	}
+	else if(id==tables["Error propagation"])	//error propagation input 
+	{
+		$(".propagationInp").prop('disabled', true);
+		$('#'+id+'-0').prop('disabled', false);
+		toggle_propagation_formula($('#'+id+'-0-0'));
+	}
+}
+function toggle_propagation_formula(pressedFormula)
+{
+	$('.active_propagation_formula').removeClass('active_propagation_formula');
+	$(pressedFormula).addClass('active_propagation_formula');
+}
+function toggle_propagation_input(pressedInput)
+{
+	var table = $(pressedInput).closest('.ErrorContainer').attr('id');
+	var id = +$(pressedInput).attr('id').replace(table+"-","");
+	var nOfInputs = $('.propagationInp').length
+	if(id<nOfInputs/2)	//prevent changes when constants are added
+	{
+		var value = $(pressedInput).val();
+		var newStatus = isNaN(value)||value==''||value.indexOf(' ') >= 0;	//true stands for disabled
+		if(newStatus)	//Disable every input area after this one in case they were enabled before and the user deleted the content
+		{
+			if(id!=(nOfInputs/2)-1)	//last element doesn't have anything to activate other than the constant input.
+			{
+				for (var i=id;i<(nOfInputs/2);i++)
+				{
+					$('#'+table+'-'+(i+nOfInputs/2)).prop('disabled', newStatus);
+					$('#'+table+'-'+(i+nOfInputs/2)).val('');
+					if(i+1<nOfInputs/2)
+					{
+						$('#'+table+'-'+(i+1)).prop('disabled', newStatus);
+						$('#'+table+'-'+(i+1)).val('');
+					}
+				}
+			}
+			else
+			{
+				$('#'+table+'-'+(parseInt(id)+nOfInputs/2)).prop('disabled', newStatus);
+			}
+		}
+		else
+		{
+			if(id!=(nOfInputs/2)-1)	//last element doesn't have anything to activate other than the constant input.
+			{
+				$('#'+table+'-'+(parseInt(id)+1)).prop('disabled', newStatus);
+				$('#'+table+'-'+(parseInt(id)+nOfInputs/2)).prop('disabled', newStatus);
+			}
+			else
+			{
+				$('#'+table+'-'+(parseInt(id)+nOfInputs/2)).prop('disabled', newStatus);
+			}
+		}
 	}
 }
 function calculateMeasurementError()
@@ -221,8 +289,10 @@ function calculateMeasurementError()
 		return;
 	}
 	
-	var theoretical = document.getElementById(table+'-0').value;
-	var experimental = document.getElementById(table+'-1').value;
+	var theoretical = +document.getElementById(table+'-0').value;	//+ will cast any spaces to zero
+	document.getElementById(table+'-0').value = theoretical;	//Replace the input with the numerical value in order to show of spaces as zero.
+	var experimental = +document.getElementById(table+'-1').value;
+	document.getElementById(table+'-1').value = experimental;
 	
 	//absolute error
 	document.getElementById(table+'-screen'+'-0').innerHTML=Math.abs(theoretical-experimental).toFixed(3);
@@ -239,14 +309,21 @@ function calculateMeasurementError()
 	logO.id = 'tbl_'+table;
 	actionLogger.log("start", logO);
 }
-function calculateAverageError(){
+function calculateAverageError()
+{
 	var table = 1;	//table id
 	if( !testInput(table) ){
 		alert("Invalid input\nOnly numerical values are allowed.");
 		return;
 	}
-	var standar = document.getElementById(table+'-0').value;
-	var nV = document.getElementById(table+'-1').value;
+	var standar = +document.getElementById(table+'-0').value;	//+ will cast any spaces to zero
+	document.getElementById(table+'-0').value = standar	//Replace the input with the numerical value in order to show of spaces as zero.
+	var nV = +document.getElementById(table+'-1').value;
+	document.getElementById(table+'-1').value = nV;
+	if(nV==0){
+		alert("The number of values included in the average can't be 0.");
+		return;
+	}
 	document.getElementById(table+'-screen').innerHTML=(standar/Math.sqrt(nV)).toFixed(3);
 	var questions = document.getElementsByClassName(table+"-questions");
 	for (var i=0;i<questions.length;i++)
@@ -285,7 +362,8 @@ function calculateStandardDeviation()
 		questions[i].style.display="";
 }
 
-function calculateMeanValue(){
+function calculateMeanValue()
+{
 	var i, maxProbableError, avg, newValues, table=4;
 	var expValTable = 0;	//Table that contains the experimental value input field to be auto-filled.
 	var sdTable = 2;	//standard deviation table
@@ -327,9 +405,16 @@ function calculateMeanValue(){
 	enable_error_buttons();
 }
 
-function testInput(table){	//returns true for numerical values and false for everything else
+function calculateErrorPropagation()
+{
+	var table = tables["Error propagation"];
+	$('.active_propagation_formula').attr('id');
+}
 
-	if(table==2)		//table 2 has only 1 form to check
+function testInput(table)
+{	//returns true for numerical values and false for everything else
+
+	if(table==tables["Standard Deviation"])		//table 2 has only 1 form to check
 	{
 		var values = document.getElementById(table+'-0').value.split(" ");
 		if(values.length<2)return false;
@@ -337,7 +422,7 @@ function testInput(table){	//returns true for numerical values and false for eve
 			if(isNaN(values[i]) || values[i]=="" || values[i]==" ")return false;
 		}
 	}
-	else if(table==4)
+	else if(table==tables["Experimental values"])
 	{
 		var values = document.getElementById(table+'-0').value.split(" ");
 		if(values.length<2)return false;
@@ -346,7 +431,11 @@ function testInput(table){	//returns true for numerical values and false for eve
 		}
 		inputValue=document.getElementById(table+'-1').value;
 		if(isNaN(inputValue) || inputValue=="" || ( ( inputValue.indexOf(' ')==0 && inputValue.length-1==0 ) || ( inputValue.indexOf(' ')==inputValue.length-1 && inputValue.length-1==0 ) ) )return false;
-	}	
+	}
+	else if(table==tables["Error propagation"])
+	{
+		
+	}
 	else
 	{
 		inputValue=document.getElementById(table+'-0').value;
