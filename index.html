@@ -51,16 +51,15 @@
 				</ul>
 			</div>
 			
-			<div class="ErrorContainer" id="0">
+			<div class="ErrorContainer" id="0" name="Error in measurements">
 				<div class="Error_title">Error in measurements</div>
 				<div class="row">
 					<div class="p1">Insert the theoretical value <img src="images/more.png" alt="info" class="infoIcons" id="infoIconTheoreticalValue"></div>
-					<!-- <span class="infoIcons" id="infoIconTheoreticalValue"><img src="images/more.png" alt="info"></span> -->
-					<div><input type="text" id="0-0"></div>
+					<div><input type="text" name="theoreticalValue" id="0-0"></div>
 				</div>
 				<div class="row">
 					<div class="p1">Insert the experimental value <img src="images/more.png" alt="info" class="infoIcons" id="infoIconExperimentalValue"></div>
-					<div><input type="text" id="0-1"></div>
+					<div><input type="text" name="experimentalValue" id="0-1"></div>
 				</div>
 				<div class="row">
 					<div class="calculate">Calculate</div>
@@ -92,16 +91,16 @@
 				</div>
 			</div>
 			
-			<div class="ErrorContainer" id="1">
+			<div class="ErrorContainer" id="1" name="Error in an average">
 				<div class="Error_title">Error in an average</div>
 					
 				<div class="row">
 					<div class="p1">Insert the standard error in each measurement</div>
-					<div><input type="text" id="1-0"></div>
+					<div><input type="text" name="standardError" id="1-0"></div>
 				</div>
 				<div class="row">
 					<div class="p1">Insert the number of values included in the average</div>
-					<div><input type="text" id="1-1"></div>
+					<div><input type="text" name="numberOfValues" id="1-1"></div>
 				</div>
 				<div class="row">
 					<div class="calculate">Calculate</div>
@@ -128,12 +127,12 @@
 				</div>
 			</div>
 			
-			<div class="ErrorContainer" id="2">
+			<div class="ErrorContainer" id="2" name="Standard Deviation">
 				<div class="Error_title">Standard Deviation</div>
 				
 				<div class="row">
 					<div class="p1">Insert each value you have measured. Separate the values using a 'space'.</div>
-					<div><input type="text" id="2-0"></div>
+					<div><input type="text" name="sdValues" id="2-0"></div>
 				</div>
 				<div class="row">
 					<div class="calculate">Calculate</div>
@@ -173,12 +172,12 @@
 				</div>
 			</div>		
 			
-			<div class="ErrorContainer" id="4">
+			<div class="ErrorContainer" id="4" name="Experimental values">
 				<div class="Error_title">Experimental values</div>
 				
 				<div class="row">
 					<div class="p1">Insert each value you have measured. Separate the values using a 'space'.</div>
-					<div><input type="text" id="4-0"></div>
+					<div><input type="text" name="experimentalValues" id="4-0"></div>
 				</div>				
 				<div class="row">
 					<div class="p1">
@@ -186,7 +185,7 @@
 						<img src="images/more.png" alt="info" class="infoIcons" id="infoIconSystematicError">
 					</div>					
 					<div>
-						<input type="text" id="4-1">
+						<input type="text" name="systematicError" id="4-1">
 					</div>
 				</div>
 				<div class="row">
@@ -195,7 +194,7 @@
 				</div>
 				<div class="row">
 					<div class="p1">The corrected set of measurements is:</div>
-					<div><input type="text" id="4-screen-0"></div>
+					<div><input type="text" name="correctedMeasurements" id="4-screen-0"></div>
 				</div>
 				<div class="row">
 					<div class="p1">The mean value is:</div>
@@ -208,7 +207,7 @@
 				</div>
 			</div>
 			
-			<div class="ErrorContainer" id="3">
+			<div class="ErrorContainer" id="3" name="Sources of error">
 				<div class="Error_title"> What sources of error are there?</div>
 				There are three general types of errors which may distort experimental outcomes:
 				<ul>
@@ -225,7 +224,7 @@
 					<b>Random errors</b> are errors that occur because when making repeated measurements during an experiment, it is practically impossible to reproduce the exact same conditions every time. Random errors usually cause small variations among measurements but some times a measurement may be too small or too big compared to the rest. Such measurements have to be excluded from the set of data. In order to reduce this kind of errors the experimenter should repeat the measurements as many times as possible
 				</div>
 			</div>			
-			<div class="ErrorContainer" id="5">
+			<div class="ErrorContainer" id="5" name="Introduction">
 				<div class="Error_title">Introduction</div>
 				<div class="justify">
 					When conducting an experiment using laboratory equipment and not simulations, the measurements of any physical quantity can never be 100% accurate. The deviation between an experimental value and the actual true value of a quantity can be due to many reasons which we usually refer to as <i>error factors</i>. Such factors can for example be the accuracy of the measuring tool, the experimental set-up used or random mistakes made by the experimenter.Let's have a look at the following example.Say we are asked to measure the diameter of the ball in the image below. 
@@ -248,7 +247,7 @@
 				</div>
 			</div>
 			
-			<div class="ErrorContainer" id="6">
+			<div class="ErrorContainer" id="6" name="Error propagation">
 				<div class="Error_title">Error propagation</div>
 				<div class="justify">
 					<b>Error propagation</b>
@@ -292,21 +291,21 @@
 			</div>
 			
 
-			<div class="error_info" id="info-SystematicError">
+			<div class="error_info" id="info-SystematicError" name="Systematic error info">
 				<br>
 				<b>Systematic errors</b> are errors which occur in all measurements when performing an experiment.
 				<br>
 				Before starting your experiment, you need check your instruments for possible zero error. To do that, set your instrument to zero and check its indication. Does it say zero or does it give another value? If so, that value is considered to be a systematic error and you will have to correct all your measurements by subtracting it.  
 			</div>
-			<div class="error_info" id="info-TheoreticalValue">
+			<div class="error_info" id="info-TheoreticalValue" name="Theoretical value info">
 				The <b>theoretical value</b> of a quantity can refer to different things. If we are trying to verify a given theory then the theoretical value is the value derived from the respective mathematical equation.For example, let's say we are performing an experiment to measure the time in which an object will reach the ground from a given height according to the laws of free fall. Then, the theoretical value will be the one derived from the equation<img src="images/theoritical_value_formula.png" alt="asdf">whereas the experimental value would be the one we actually measured during the experiment using a stop watch.
 				<br>
 				Another case is when we are measuring quantities whose value is already known from the bibliography. For example, let's say we want to measure the density of glycerin. In that case, in our experiment we would be taking measurements of mass and volume and calculate the density using the equation<img src="images/density_formula.png" alt="asdf">The theoretical value would be the one derived from bibliography which is 1.261 g/cm<sup>3</sup>. 
 			</div>
-			<div class="error_info" id="info-ExperimentalValue">
+			<div class="error_info" id="info-ExperimentalValue" name="Experimental values info">
 				<br><br>The <b>experimental value</b> is the one measured while performing an experiment. If you have collected a set of measurements, the experimental value is the mean of the set of measurements.
 			</div>
-			<div class="error_info" id="info-0">
+			<div class="error_info" id="info-0" name="Error in measurements Info">
 				<br>
 				When we present a measurement it is also important to present the error of that measurement. We usually accompany our measurement with either the <b>absolute error</b>, or the relative error. In some cases we might also wish to present the <b>relative error</b> as percentage errors.  Presenting the absolute or the relative error along with the actual measurement allows people to decide to what degree our measurement is valid and reliable.
 				The <b>absolute error</b> is the magnitude of the difference between the theoretical and the experimental value.
@@ -316,11 +315,11 @@
 				<br><br>The <b>percentage error</b> is the relative error expressed in terms of percentage.
 				<br><br><img src="images/percentage_error_formula.png" alt="percentage_error_formula">
 			</div>
-			<div class="error_info" id="info-1">
+			<div class="error_info" id="info-1" name="Info">
 				<b>Error in an average:</b>When repeating the same measurement a number of times, we produce a set of values and then the average value is calculated. Respectively, one must also calculate the average error.
 				<br><br><img src="images/average_error_formula.png" alt="average_error_formula">
 			</div>
-			<div class="error_info justify" id="info-2">
+			<div class="error_info justify" id="info-2" name="Standard deviation info">
 				<b>Standard deviation (&sigma;)</b> is a statistical measurement that is used to illustrate the spread of an experiment's values relative to an average value or standard value. Low standard deviation means that the values are close to the mean value. Thus, the lower the standard deviation is, the more reliable our measurements are. In the picture below, both set of measurements have the same mean value. The measurements on the left have a high standards deviation whereas the measurements on the right have low standard deviation. 
 				<br><br><img src="images/standard_deviation_example.png" alt="standard_deviation_example">
 				<br><br>
@@ -329,13 +328,9 @@
 				The formula to calculate the standard deviation is: 
 				<br><br><img src="images/standard_deviation_error_formula.png" alt="standard_deviation_error_formula">
 			</div>
-			<div class="error_info" id="info-4">
+			<div class="error_info" id="info-4" name="Maximum probable error info">
 				The <b>maximum probable error</b> is the maximum deviation from the mean.
 				<br><br><img src="images/maximum_probable_error_formula.png" alt="maximum_probable_error_formula">
-			</div>
-			<div class="error_info" id="info-PropagationValues">
-				If you have calculated a mean value, then the error is the standard deviation. If you have an individual measurement the error is usually the lowest indication of your instrument.
-				<br><br>
 			</div>
 			
 			<div class="golablogo"><img width="100" height="89" src="images/Go-Lab.png" alt="Go-Lab logo"></div>
