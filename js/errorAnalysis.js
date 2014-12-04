@@ -16,13 +16,14 @@ var actionLogger, errorAnalysisToolMetadataHandler;
 $( document ).ready(function() {
 	n = document.getElementsByClassName("ErrorContainer").length;
 
+	init_log_items();
+	init_actionLogger();
+	event_handlers();
+	
 	for (var i=0;i<n;i++) {
 		reset_table(i);
 	}
 	
-	init_log_items();
-	init_actionLogger();
-	event_handlers();
 	//Hide all error tables, show the first one and set it as the active table
 	show_table(tables["Experimental values"]);	//Must be placed after event handlers so the first active table can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive"	
 	disable_error_buttons();
@@ -130,12 +131,12 @@ function init_actionLogger() {
 		//here, actionLogger is ready for usage
 	});	*/
 	
-/* 	errorAnalysisToolMetadataHandler = new window.golab.ils.metadata.GoLabMetadataHandler(initialMetadata, function() {});
+/*  	errorAnalysisToolMetadataHandler = new window.golab.ils.metadata.GoLabMetadataHandler(initialMetadata, function() {});
 	actionLogger = new window.ut.commons.actionlogging.ActionLogger(errorAnalysisToolMetadataHandler);
 	actionLogger.setLoggingTarget("console"); */
 	
 
-	new golab.ils.metadata.GoLabMetadataHandler({
+ 	new golab.ils.metadata.GoLabMetadataHandler({
 		"actor": {
 		  "objectType": "person",
 		  "id": "unknown",
@@ -178,8 +179,9 @@ function show_table(id) {
 	hide_info();
 	document.getElementById(id).style.display = "block";
 	document.getElementById("errorButton"+id).className = "ErrorButtonsActive";
+	if(active!=-1)	//Don't log the action when the document gets initialized
+		actionLogger.log("access", logItems[id]);
 	active=id;
-	actionLogger.log("access", logItems[id]);
 }
 function hide_table(id) {
 	document.getElementById(id).style.display = "none";
