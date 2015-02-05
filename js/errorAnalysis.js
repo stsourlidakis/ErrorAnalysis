@@ -1,6 +1,6 @@
 var active=-1;	//id of the active table
 var experimentalValuesDone=false;
-var n;//# of error buttons/tables
+var n;	//# of error buttons/tables
 var tables = {	//Associate table titles with ids
 	"Error in measurements": 0,
 	"Error in an average": 1,
@@ -24,7 +24,7 @@ $( document ).ready(function() {
 		reset_table(i);
 	}
 	
-	//Hide all error tables, show the first one and set it as the active table
+	//Hide all error tables, show the first one and set it as the active table.
 	show_table(tables["Experimental values"]);	//Must be placed after event handlers so the first active table can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive"	
 	disable_error_buttons();
 
@@ -94,13 +94,17 @@ function init_log_items() {
 function init_actionLogger() {
   	var documentType = "errorAnalysisInstance";
 	var toolName = "golab.errorAnalysisTool";
+	var curr_user;
+	ils.getCurrentUser(function(current_user){
+		curr_user = current_user;
+	});
 	var initialMetadata = {
 		"id": "",
 		"published": "",
 		"actor": {
 		  "objectType": "person",
-		  "id": "unknown",
-		  "displayName": "unknown"
+		  "id": ut.commons.utils.generateUUID(),
+		  "displayName": curr_user
 		},
 		"target": {
 		  "objectType": documentType,
@@ -121,6 +125,16 @@ function init_actionLogger() {
 		  "displayName": "unknown"
 		}
 	};
+	
+	new golab.ils.metadata.GoLabMetadataHandler(initialMetadata, function(error, metadataHandler) {
+	  if (error == undefined) {
+		errorAnalysisToolMetadataHandler = metadataHandler;
+		actionLogger = new window.ut.commons.actionlogging.ActionLogger(metadataHandler);
+		actionLogger.setLoggingTarget("console");
+	  } else {
+		console.error ("Something went wrong when creating the MetadataHandler: "+error);
+	  }
+  })
 
 /* 	new window.golab.ils.metadata.GoLabMetadataHandler(initialMetadata, function(metadataHandler) {
 		actionLogger = new window.ut.commons.actionlogging.ActionLogger(metadataHandler);
@@ -136,39 +150,7 @@ function init_actionLogger() {
 	actionLogger.setLoggingTarget("console"); */
 	
 
- 	new golab.ils.metadata.GoLabMetadataHandler({
-		"actor": {
-		  "objectType": "person",
-		  "id": "unknown",
-		  "displayName": "unknown"
-		},
-		"target": {
-		  "objectType": documentType,
-		  "id": ut.commons.utils.generateUUID(),
-		  "displayName": "unnamed " + documentType
-		},
-		"generator": {
-		  "objectType": "application",
-		  "url": window.location.href,
-		  "id": ut.commons.utils.generateUUID(),
-		  "displayName": toolName
-		},
-		"provider": {
-		  "objectType": "ils",
-		  "url": window.location.href,
-		  "id": "unknown",
-		  "inquiryPhase": "unknown",
-		  "displayName": "unknown"
-		}}, function(error, metadataHandler) {
-		  if (error == undefined) {
-			errorAnalysisToolMetadataHandler = metadataHandler;
-			actionLogger = new window.ut.commons.actionlogging.ActionLogger(metadataHandler);
-			actionLogger.setLoggingTarget("console");
-		  } else {
-			console.error ("Something went wrong when creating the MetadataHandler: "+error);
-		  }
-	  })
-	 
+
 }
 function show_table(id) {
 	if(active==id)return;	//Don't try to show an already active error table
@@ -186,7 +168,6 @@ function show_table(id) {
 function hide_table(id) {
 	document.getElementById(id).style.display = "none";
 	if( !$('#errorButton'+id ).hasClass('ErrorButtonsInactive') )document.getElementById("errorButton"+id).className = "ErrorButtons";
-	if(id==active)active=-1;
 }
 function reset_table(id) {
 	if( (id == tables["Sources of error"]) || (id == tables["Error propagation"]) || (id == tables["Introduction"]) )return;	//Skip tables that don't have any elements to reset.
