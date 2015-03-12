@@ -10,16 +10,23 @@ var tables = {	//Associate table titles with ids
 	"Introduction": 5,
 	"Error propagation": 6
 	};
+
+var documentType = "errorAnalysisInstance";
 var logItems = {};	//The object that contains the information about each element in order to log changes.
-var actionLogger, errorAnalysisToolMetadataHandler;
+var actionLogger, storageHandler, errorAnalysisToolMetadataHandler;
+var resourceContent = {};
 
 $( document ).ready(function() {
 	n = document.getElementsByClassName("ErrorContainer").length;
 
 	init_log_items();
-	init_actionLogger();
+	init_golab_handlers();
 	event_handlers();
 	
+	reset();
+});
+function reset(){
+	active = -1;
 	for (var i=0;i<n;i++) {
 		reset_table(i);
 	}
@@ -27,8 +34,7 @@ $( document ).ready(function() {
 	//Hide all error tables, show the first one and set it as the active table.
 	show_table(tables["Experimental values"]);	//Must be placed after event handlers so the first active table can be logged as a member of "ErrorButtons" class before show_table() change its class to "ErrorButtonsActive"	
 	disable_error_buttons();
-
-});
+}
 function event_handlers() {
 	$(".ErrorButtons").click(function() {	//Change displayed error table
 		show_table($(this).attr("id").replace("errorButton",""));
@@ -53,6 +59,15 @@ function event_handlers() {
 	$(".reset").click(function() {	//Reset error input fields on the active table
 		reset_table($(this).closest('.ErrorContainer').attr('id'));
 	});
+	$(".clearButtons").click(function() {	//Clear
+		reset();
+	});
+	$(".openButtons").click(function() {	//Load
+		loadResource();
+	});
+	$(".saveButtons").click(function() {	//Save
+		saveResource();
+	});
 	
 	
 	$('input:text').change(function() {	//log changes on input fields when the value changes
@@ -64,9 +79,80 @@ function event_handlers() {
 	
  	$("html").keypress(function(e) {	//testing
 		if(e.keyCode==33) {	//page up
-			console.log(logItems);
+			// console.log(logItems);
+			// testStorage();
+			// saveResource();
 		}
 	});
+}
+function saveResource(){
+	updateLocalResource();
+	storageHandler.readLatestResource(documentType, function(error, resource) {	//check if there is a resource for the current user that can be updated.
+		if( resource != undefined ){	//Update the latest resource.
+			storageHandler.updateResource(resource.metadata.id, resourceContent, function(updateError, updatedResource) {
+				if( updateError != undefined ){
+					console.warn("something went wrong:");
+					console.warn(updateError);
+				}
+				else{
+					console.log("the resource has been updated successfully");
+					console.log("id:"+updatedResource.metadata.id);
+					console.log(updatedResource);
+					logItems['resource'].id = updatedResource.metadata.id;
+					actionLogger.log("update", logItems['resource']);
+				}
+			});
+		}
+		else{	//Create a new resource.
+			storageHandler.createResource(resourceContent, function(newError, newResource) {
+				if (newError != undefined) {
+					console.warn("something went wrong:");
+					console.warn(newError);
+				}
+				else {
+					console.log("the resource has been created successfully.");
+					console.log("id:"+newResource.metadata.id);
+					console.log(newResource);
+					logItems['resource'].id = newResource.metadata.id;
+					actionLogger.log("create", logItems['resource']);
+				}
+			});
+		}
+	});
+}
+function loadResource(){
+	storageHandler.readLatestResource(documentType, function(error, resource) {
+		if( resource != undefined ){
+			reset();	//Reset first in order to clear the screens.
+			//Replace with the saved values and if they are valid, do the calculations.
+			$('input[name=experimentalValues]').val(resource.content['experimentalValues']);
+			$('input[name=systematicError]').val(resource.content['systematicError']);
+			if( check_input(tables['Experimental values']) )
+				calculateMeanValue();
+			$('input[name=theoreticalValue]').val(resource.content['theoreticalValue']);
+			$('input[name=experimentalValue]').val(resource.content['experimentalValue']);			
+			if( check_input(tables['Error in measurements']) )
+				calculateMeasurementError();
+			$('input[name=sdValues]').val(resource.content['sdValues']);			
+			if( check_input(tables['Standard Deviation']) )
+				calculateStandardDeviation();
+			$('input[name=standardError]').val(resource.content['standardError']);
+			$('input[name=numberOfValues]').val(resource.content['numberOfValues']);			
+			if( check_input(tables['Error in an average']) )
+				calculateAverageError();
+			logItems['resource'].id = resource.metadata.id;
+			actionLogger.log("open", logItems['resource']);
+		}
+	});
+}
+function updateLocalResource(){
+	resourceContent['experimentalValues'] = $('input[name=experimentalValues]').val();
+	resourceContent['systematicError'] = $('input[name=systematicError]').val();
+	resourceContent['theoreticalValue'] = $('input[name=theoreticalValue]').val();
+	resourceContent['experimentalValue'] = $('input[name=experimentalValue]').val();
+	resourceContent['sdValues'] = $('input[name=sdValues]').val();
+	resourceContent['standardError'] = $('input[name=standardError]').val();
+	resourceContent['numberOfValues'] = $('input[name=numberOfValues]').val();
 }
 function init_log_items() {
 	$('.ErrorContainer').each(function() {
@@ -90,26 +176,27 @@ function init_log_items() {
 			'content': ''
 		};
 	});
+	logItems['resource'] = {
+		'objectType': 'resource',
+		'id': '',
+		'content': 'app data'
+	};
 }
-function init_actionLogger() {
-  	var documentType = "errorAnalysisInstance";
+function init_golab_handlers() {
 	var toolName = "golab.errorAnalysisTool";
-	var curr_user;
-	ils.getCurrentUser(function(current_user){
-		curr_user = current_user;
-	});
+	var currUser, currIls;
 	var initialMetadata = {
-		"id": "",
-		"published": "",
+		"id": '',
+		"published": '',
 		"actor": {
 		  "objectType": "person",
 		  "id": ut.commons.utils.generateUUID(),
-		  "displayName": curr_user
+		  "displayName": ''
 		},
 		"target": {
 		  "objectType": documentType,
 		  "id": ut.commons.utils.generateUUID(),
-		  "displayName": "unnamed " + documentType
+		  "displayName": ''
 		},
 		"generator": {
 		  "objectType": "application",
@@ -120,37 +207,32 @@ function init_actionLogger() {
 		"provider": {
 		  "objectType": "ils",
 		  "url": window.location.href,
-		  "id": "unknown",
-		  "inquiryPhase": "unknown",
-		  "displayName": "unknown"
-		}
+		  "id": '',
+		  "displayName": ''
+		} 
 	};
-	
-	new golab.ils.metadata.GoLabMetadataHandler(initialMetadata, function(error, metadataHandler) {
-	  if (error == undefined) {
-		errorAnalysisToolMetadataHandler = metadataHandler;
-		actionLogger = new window.ut.commons.actionlogging.ActionLogger(metadataHandler);
-		actionLogger.setLoggingTarget("console");
-	  } else {
-		console.error ("Something went wrong when creating the MetadataHandler: "+error);
-	  }
-  })
-
-/* 	new window.golab.ils.metadata.GoLabMetadataHandler(initialMetadata, function(metadataHandler) {
-		actionLogger = new window.ut.commons.actionlogging.ActionLogger(metadataHandler);
-		//actionLogger.setLoggingTarget("opensocial");
-		// for development, using the following line might be helpful,
-		// as it sets the ActionLogger to log to the console for easy debugging
-		actionLogger.setLoggingTarget("console");
-		//here, actionLogger is ready for usage
-	});	*/
-	
-/*  	errorAnalysisToolMetadataHandler = new window.golab.ils.metadata.GoLabMetadataHandler(initialMetadata, function() {});
-	actionLogger = new window.ut.commons.actionlogging.ActionLogger(errorAnalysisToolMetadataHandler);
-	actionLogger.setLoggingTarget("console"); */
-	
-
-
+	ils.getCurrentUser(function(current_user){
+		initialMetadata.actor.displayName = current_user;
+		currUser = current_user;
+		ils.getIls(function(ils_space){
+			initialMetadata.provider.id = ils_space.id;
+			initialMetadata.provider.displayName = ils_space.displayName;
+			initialMetadata.target.displayName = ils_space.displayName+' '+documentType;
+			currIls = ils_space;
+			
+			new golab.ils.metadata.GoLabMetadataHandler(initialMetadata, function(error, metadataHandler) {
+			  if (error == undefined) {
+				// errorAnalysisToolMetadataHandler = metadataHandler;
+				actionLogger = new window.ut.commons.actionlogging.ActionLogger(metadataHandler);
+				actionLogger.setLoggingTarget("opensocial");
+				// actionLogger.setLoggingTarget("console");
+				storageHandler = new golab.ils.storage.LocalStorageHandler(metadataHandler);
+			  } else {
+				console.error ("Something went wrong when creating the MetadataHandler: "+error);
+			  }
+		  });
+		});
+	});
 }
 function show_table(id) {
 	if(active==id)return;	//Don't try to show an already active error table
@@ -351,8 +433,7 @@ function calculateMeanValue() {
 	actionLogger.log("start", logItems[table]);
 }
 
-function check_input(table)	{	//Returns true for numerical values and false for everything else
-
+function check_input(table)	{	//Returns true for valid values on the selected error table
 
 	if(table==tables["Standard Deviation"]) {	//Table 2 has only 1 form to check
 		var values = document.getElementById(table+'-0').value.split(" ");
@@ -377,63 +458,4 @@ function check_input(table)	{	//Returns true for numerical values and false for 
 		if(isNaN(inputValue) || inputValue=="" || ( ( inputValue.indexOf(' ')==0 && inputValue.length-1==0 ) || ( inputValue.indexOf(' ')==inputValue.length-1 && inputValue.length-1==0 ) ) )return false;
 	}
 	return true;
-}
-
-function getString(table) {
-	if(table==0)	{
-		var table_obj = document.getElementById(table);
-		var temp_string = table_obj.getElementsByClassName('Error_title')[0].textContent;
-		temp_string += '\r\n' + table_obj.getElementsByClassName('p1')[0].textContent.replace('Insert the ','') + ': ' + document.getElementById(table+'-0').value;
-		temp_string += '\r\n' + table_obj.getElementsByClassName('p1')[1].textContent.replace('Insert the ','') + ': ' + document.getElementById(table+'-1').value;
-		temp_string += '\r\nThe absolute error is: ' + document.getElementById('0-screen-0').textContent;
-		temp_string += '\r\nThe relative error is: ' + document.getElementById('0-screen-1').textContent;
-		temp_string += '\r\nThe percentage error is: ' + document.getElementById('0-screen-2').textContent;
-		temp_string += '\r\n' + table_obj.getElementsByClassName('question_title')[0].innerHTML + (document.getElementById(table+'-r-0').checked?' Yes':' No');
-		temp_string += '\r\n' + table_obj.getElementsByClassName('question_title')[1].innerHTML + (document.getElementById(table+'-r-2').checked?' Yes':' No');
-		temp_string += '\r\n' + table_obj.getElementsByClassName('question_title')[2].innerHTML;
-		if(document.getElementById(table+'-cb-0').checked) temp_string+=' '+document.getElementById(table+'-cb-0').value.replace('_',' ');
-		if(document.getElementById(table+'-cb-1').checked) temp_string+=' '+document.getElementById(table+'-cb-1').value.replace('_',' ');
-		if(document.getElementById(table+'-cb-2').checked) temp_string+=' '+document.getElementById(table+'-cb-2').value.replace('_',' ');
-		temp_string=temp_string.replace('Error Systematic','Error,Systematic');	//replace " " with "," in case more than one error check boxes are currently selected
-		temp_string=temp_string.replace('Error Random','Error,Random');
-		var blob = new Blob([temp_string], {type: "text/plain;charset=utf-8"});
-		saveAs(blob, table_obj.getElementsByClassName('Error_title')[0].textContent+".txt");
-	}
-	if(table==1) {
-		var table_obj = document.getElementById(table);
-		var temp_string = table_obj.getElementsByClassName('Error_title')[0].textContent;
-		temp_string += '\r\n' + table_obj.getElementsByClassName('p1')[0].textContent.replace('Insert the ','') + ': ' + document.getElementById(table+'-0').value;
-		temp_string += '\r\n' + table_obj.getElementsByClassName('p1')[1].textContent.replace('Insert the ','') + ': ' + document.getElementById(table+'-1').value;
-		temp_string += '\r\nResult: ' + document.getElementById(table+'-screen').textContent;
-		temp_string += '\r\n' + table_obj.getElementsByClassName('question_title')[0].innerHTML + (document.getElementById(table+'-r-0').checked?' Yes':' No');
-		temp_string += '\r\n' + table_obj.getElementsByClassName('question_title')[1].innerHTML + (document.getElementById(table+'-r-2').checked?' Yes':' No');
-		temp_string += '\r\n' + table_obj.getElementsByClassName('question_title')[2].innerHTML;
-		if(document.getElementById(table+'-cb-0').checked) temp_string+=' '+document.getElementById(table+'-cb-0').value.replace('_',' ');
-		if(document.getElementById(table+'-cb-1').checked) temp_string+=' '+document.getElementById(table+'-cb-1').value.replace('_',' ');
-		if(document.getElementById(table+'-cb-2').checked) temp_string+=' '+document.getElementById(table+'-cb-2').value.replace('_',' ');
-		temp_string=temp_string.replace('Error Systematic','Error,Systematic');	//replace " " with "," in case more than one error check boxes are currently selected
-		temp_string=temp_string.replace('Error Random','Error,Random');
-		var blob = new Blob([temp_string], {type: "text/plain;charset=utf-8"});
-		saveAs(blob, table_obj.getElementsByClassName('Error_title')[0].textContent+".txt");
-	}
-	if(table == 2) {
-		var table_obj = document.getElementById(table);
-		var temp_string = table_obj.getElementsByClassName('Error_title')[0].textContent;
-		temp_string += '\r\nvalues you have measured: ' + document.getElementById(table+'-0').value;
-		temp_string += '\r\nThe mean value is: ' + document.getElementById('2-screen-0').textContent;
-		temp_string += '\r\nThe standard deviation is:' + document.getElementById('2-screen-1').textContent;
-		var get_sigma = table_obj.getElementsByClassName('question_title')[0].innerHTML;
-		get_sigma=get_sigma.charAt(get_sigma.indexOf('1')+1);
-		temp_string += '\r\n' + table_obj.getElementsByClassName('question_title')[0].innerHTML + ( document.getElementById(table+'-r-0').checked?' 1'+get_sigma:(document.getElementById(table+'-r-1').checked?' 2'+get_sigma:' 3'+get_sigma) );
-		temp_string += '\r\n' + table_obj.getElementsByClassName('question_title')[1].innerHTML + (document.getElementById(table+'-r-3').checked?' Yes':' No');
-		temp_string += '\r\n' + table_obj.getElementsByClassName('question_title')[2].innerHTML;
-		if(document.getElementById(table+'-cb-0').checked) temp_string+=' '+document.getElementById(table+'-cb-0').value.replace('_',' ');
-		if(document.getElementById(table+'-cb-1').checked) temp_string+=' '+document.getElementById(table+'-cb-1').value.replace('_',' ');
-		if(document.getElementById(table+'-cb-2').checked) temp_string+=' '+document.getElementById(table+'-cb-2').value.replace('_',' ');
-		temp_string=temp_string.replace('Error Systematic','Error,Systematic');	//replace " " with "," in case more than one error check boxes are currently selected
-		temp_string=temp_string.replace('Error Random','Error,Random');
-		var blob = new Blob([temp_string], {type: "text/plain;charset=utf-8"});
-		saveAs(blob, table_obj.getElementsByClassName('Error_title')[0].textContent+".txt");
-	}
-	//return s;
 }

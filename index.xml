@@ -2,7 +2,7 @@
   <ModulePrefs title="Experimental errors calculator"
               author_email="s.tsourlidakis@hotmail.com"
               author="Stavros Tsourlidakis"
-              width="500"
+              width="1000"
               height="700">
       <Require feature="opensocial" />
       <Require feature="osapi" />
@@ -18,15 +18,14 @@
 		<link rel="stylesheet" type="text/css" href="./css/theme.css">
 		<link rel="stylesheet" type="text/css" href="./css/font-awesome-4.0.3/css/font-awesome.min.css">
 		<script type="text/javascript" charset="utf-8" src="./js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="http://graasp.epfl.ch/gadget/libs/jquery-1.8.0.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="./js/errorAnalysis.js"></script>
-		<script type="text/javascript" charset="utf-8" src="./js/carhartl-jquery-cookie-92b7715/jquery.cookie.js"></script>
 		<script type="text/javascript" charset="utf-8" src="./js/ActionLogger.js"></script>
 		<script type="text/javascript" charset="utf-8" src="./js/ils.js"></script>
 		<script type="text/javascript" charset="utf-8" src="./js/MetadataHandler.js"></script>
 		<script type="text/javascript" charset="utf-8" src="./js/utils.js"></script>
-		<script type="text/javascript" src="http://graasp.epfl.ch/ils_lib/main/ils.js"></script>
-		<script type="text/javascript" charset="utf-8" src="./js/FileSaver.js-master/FileSaver.js"></script>
+		<script type="text/javascript" src="http://graasp.epfl.ch/gadget/libs/jquery.cookie.js"></script>
+		<script type="text/javascript" src="http://graasp.epfl.ch/ils_lib/main/ils_graaspeu.js"></script>
+		<script type="text/javascript" src="./js/StorageHandler.js"></script>
 	</head>
 	<body>	
 		<div id="container">
@@ -89,9 +88,9 @@
 				<div class="0-questions row">
 					<div class="question_title">Which sources of error do you think were there?</div>
 					<div class="form_elements">
-						<input type="checkbox" name="absolute_error_checkbox_0" value="Human_Error" id="0-cb-0">Human Error<br>
-						<input type="checkbox" name="absolutee_error_checkbox_1" value="Systematic_Error" id="0-cb-1">Systematic Error<br>
-						<input type="checkbox" name="absolute_error_checkbox_2" value="Random_Error" id="0-cb-2">Random Error	
+						<label><input type="checkbox" name="absolute_error_checkbox_0" value="Human_Error" id="0-cb-0">Human Error</label><br>
+						<label><input type="checkbox" name="absolutee_error_checkbox_1" value="Systematic_Error" id="0-cb-1">Systematic Error</label><br>
+						<label><input type="checkbox" name="absolute_error_checkbox_2" value="Random_Error" id="0-cb-2">Random Error</label>
 					</div><!-- 
 					<div class="save_element">
 						save
@@ -122,16 +121,16 @@
 				<div class="1-questions row">
 					<div class="question_title">Is your experimental value within the error in the average?</div>
 					<div class="form_elements">
-						<input type="radio" name="average_error_radio_0" value="yes" id="1-r-0" checked>Yes
-						<input type="radio" name="average_error_radio_0" value="no" id="1-r-1">No
+						<label><input type="radio" name="average_error_radio_0" value="yes" id="1-r-0" checked>Yes</label>
+						<label><input type="radio" name="average_error_radio_0" value="no" id="1-r-1">No</label>
 					</div>
 				</div>
 				<div class="1-questions row">
 					<div class="question_title">Which sources of error do you think were there?</div>
 					<div class="form_elements">
-						<input type="checkbox" name="average_error_checkbox_0" value="Human_Error" id="1-cb-0">Human Error<br>
-						<input type="checkbox" name="average_error_checkbox_1" value="Systematic_Error" id="1-cb-1">Systematic Error<br>
-						<input type="checkbox" name="average_error_checkbox_2" value="Random_Error" id="1-cb-2">Random Error	
+						<label><input type="checkbox" name="average_error_checkbox_0" value="Human_Error" id="1-cb-0">Human Error</label><br>
+						<label><input type="checkbox" name="average_error_checkbox_1" value="Systematic_Error" id="1-cb-1">Systematic Error</label><br>
+						<label><input type="checkbox" name="average_error_checkbox_2" value="Random_Error" id="1-cb-2">Random Error</label>
 					</div>
 				</div>
 			</div>
@@ -159,24 +158,24 @@
 				<div class="2-questions row">
 					<div class="question_title">Compare the absolute error to the standard deviation. Is the absolute error within the 1&sigma;, 2&sigma; or 3&sigma; of the standard deviation?</div>
 					<div class="form_elements">
-						<input type="radio" name="standard_deviation_radio_0" value="1sigma" id="2-r-0" checked>1&sigma;
-						<input type="radio" name="standard_deviation_radio_0" value="2sigma" id="2-r-1">2&sigma;
-						<input type="radio" name="standard_deviation_radio_0" value="3sigma" id="2-r-2">3&sigma;
+						<label><input type="radio" name="standard_deviation_radio_0" value="1sigma" id="2-r-0" checked>1&sigma;</label>
+						<label><input type="radio" name="standard_deviation_radio_0" value="2sigma" id="2-r-1">2&sigma;</label>
+						<label><input type="radio" name="standard_deviation_radio_0" value="3sigma" id="2-r-2">3&sigma;</label>
 					</div>
 				</div>
 				<div class="2-questions row">
 					<div class="question_title">Do you regard your measurements to be precise?</div>
 					<div class="form_elements">
-						<input type="radio" name="standard_deviation_radio_1" value="yes" id="2-r-3" checked>Yes
-						<input type="radio" name="standard_deviation_radio_1" value="no" id="2-r-4">No
+						<label><input type="radio" name="standard_deviation_radio_1" value="yes" id="2-r-3" checked>Yes</label>
+						<label><input type="radio" name="standard_deviation_radio_1" value="no" id="2-r-4">No</label>
 					</div>
 				</div>
 				<div class="2-questions row">
 					<div class="question_title">Which sources of error do you think were there?</div>
 					<div class="form_elements">
-						<input type="checkbox" name="standard_deviation_checkbox_0" value="Human_Error" id="2-cb-0">Human Error<br>
-						<input type="checkbox" name="standard_deviation_checkbox_1" value="Systematic_Error" id="2-cb-1">Systematic Error<br>
-						<input type="checkbox" name="standard_deviation_checkbox_2" value="Random_Error" id="2-cb-2">Random Error	
+						<label><input type="checkbox" name="standard_deviation_checkbox_0" value="Human_Error" id="2-cb-0">Human Error</label><br>
+						<label><input type="checkbox" name="standard_deviation_checkbox_1" value="Systematic_Error" id="2-cb-1">Systematic Error</label><br>
+						<label><input type="checkbox" name="standard_deviation_checkbox_2" value="Random_Error" id="2-cb-2">Random Error</label>
 					</div>
 				</div>
 			</div>		
