@@ -1,55 +1,58 @@
 <Module>
-  <ModulePrefs title="Experimental errors calculator"
+	<ModulePrefs title="Experimental errors calculator"
               author_email="s.tsourlidakis@hotmail.com"
               author="Stavros Tsourlidakis"
               width="1000"
               height="700">
-      <Require feature="opensocial" />
-      <Require feature="osapi" />
+		<Require feature="opensocial" />
+		<Require feature="osapi" />
+	  
+		<Locale messages="./languages/en_ALL.xml"/>
+		<Locale lang="en" messages="./languages/en_ALL.xml"/>
     </ModulePrefs>
  <Content type="html" view="default,canvas,home,profile">
  <![CDATA[
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			Error Analysis v0.8.7
+			Error Analysis v0.9
 		</title>
 		
 		<link rel="stylesheet" type="text/css" href="./css/theme.css">
 		<link rel="stylesheet" type="text/css" href="./css/font-awesome-4.0.3/css/font-awesome.min.css">
-		<script type="text/javascript" charset="utf-8" src="./js/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" charset="utf-8" src="./js/errorAnalysis.js"></script>
-		<script type="text/javascript" charset="utf-8" src="./js/ActionLogger.js"></script>
-		<script type="text/javascript" charset="utf-8" src="./js/ils.js"></script>
-		<script type="text/javascript" charset="utf-8" src="./js/MetadataHandler.js"></script>
-		<script type="text/javascript" charset="utf-8" src="./js/utils.js"></script>
-		<script type="text/javascript" src="http://graasp.epfl.ch/gadget/libs/jquery.cookie.js"></script>
-		<script type="text/javascript" src="http://graasp.epfl.ch/ils_lib/main/ils_graaspeu.js"></script>
+		<script type="text/javascript" src="./js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="./js/errorAnalysis.js"></script>
+		<script type="text/javascript" src="./js/ActionLogger.js"></script>
+		<script type="text/javascript" src="./js/ils.js"></script>
+		<script type="text/javascript" src="./js/MetadataHandler.js"></script>
+		<script type="text/javascript" src="./js/utils.js"></script>
+		<script type="text/javascript" src="./js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="./js/ils_graaspeu.js"></script>
 		<script type="text/javascript" src="./js/StorageHandler.js"></script>
 	</head>
 	<body>	
 		<div id="container">
-			<div class="title">Experimental errors calculator</div>
+			<div class="title">__MSG_tool.title__</div>
 			<div class="ErrorButtonsContainer">
-				<div class="ErrorButtons" id="errorButton5">Introduction</div>
+				<div class="ErrorButtons" id="errorButton5">__MSG_tablesMenu.button.introduction__</div>
 				
-				<div class="ErrorButtons" id="errorButton3">Sources of error</div>
+				<div class="ErrorButtons" id="errorButton3">__MSG_tablesMenu.button.sourcesOfError__</div>
 					
-				<div class="ErrorButtons" id="errorButton6">Error propagation</div>
+				<div class="ErrorButtons" id="errorButton6">__MSG_tablesMenu.button.errorPropagation__</div>
 				
-				<div class="ErrorButtons" id="errorButton4">Experimental values</div>
+				<div class="ErrorButtons" id="errorButton4">__MSG_tablesMenu.button.experimentalValues__</div>
 				<span class="infoIcons" id="infoIcon4"><img src="images/more.png" alt="info"></span>
 				
-				<div class="button_header">Please select the type of error you wish to calculate: </div>				
+				<div class="button_header">__MSG_tablesMenu.text.directions__</div>				
 				
 				
-				<div class="ErrorButtons" id="errorButton0">Error in measurements</div>
+				<div class="ErrorButtons" id="errorButton0">__MSG_tablesMenu.button.errorInMeasurements__</div>
 				<span class="infoIcons" id="infoIcon0"><img src="images/more.png" alt="info"></span>
 				
-				<div class="ErrorButtons" id="errorButton2">Standard Deviation</div>
+				<div class="ErrorButtons" id="errorButton2">__MSG_tablesMenu.button.standardDeviation__</div>
 				<span class="infoIcons" id="infoIcon2"><img src="images/more.png" alt="info"></span>
 				
-				<div class="ErrorButtons" id="errorButton1">Error in an average</div>
+				<div class="ErrorButtons" id="errorButton1">__MSG_tablesMenu.button.errorInAnAverage__</div>
 				<span class="infoIcons" id="infoIcon1"><img src="images/more.png" alt="info"></span>
 				
 				<ul class="controlsContainer">
@@ -60,37 +63,37 @@
 			</div>
 			
 			<div class="ErrorContainer" id="0" name="Error in measurements">
-				<div class="Error_title">Error in measurements</div>
+				<div class="Error_title">__MSG_tablesMenu.button.errorInMeasurements__</div>
 				<div class="row">
-					<div class="p1">Insert the theoretical value <img src="images/more.png" alt="info" class="infoIcons" id="infoIconTheoreticalValue"></div>
+					<div class="p1">__MSG_table.errorInMeasurements.inputInstructions.0__<img src="images/more.png" alt="info" class="infoIcons" id="infoIconTheoreticalValue"></div>
 					<div><input type="text" name="theoreticalValue" id="0-0"></div>
 				</div>
 				<div class="row">
-					<div class="p1">Insert the experimental value <img src="images/more.png" alt="info" class="infoIcons" id="infoIconExperimentalValue"></div>
+					<div class="p1">__MSG_table.errorInMeasurements.inputInstructions.1__<img src="images/more.png" alt="info" class="infoIcons" id="infoIconExperimentalValue"></div>
 					<div><input type="text" name="experimentalValue" id="0-1"></div>
 				</div>
 				<div class="row">
-					<div class="calculate">Calculate</div>
-					<div class="reset">Reset</div>
+					<div class="calculate">__MSG_tool.button.calculate__</div>
+					<div class="reset">__MSG_tool.button.reset__</div>
 				</div>
 				<div class="row">
-					<div class="p1">The absolute error is:</div>
+					<div class="p1">__MSG_table.errorInMeasurements.resultInfo.0__</div>
 					<div class="screen" id="0-screen-0"></div>
 				</div>
 				<div class="row">
-					<div class="p1">The relative error is:</div>
+					<div class="p1">__MSG_table.errorInMeasurements.resultInfo.1__</div>
 					<div class="screen" id="0-screen-1"></div>
 				</div>
 				<div class="row">
-					<div class="p1">The percentage error is:</div>
+					<div class="p1">__MSG_table.errorInMeasurements.resultInfo.2__</div>
 					<div class="screen" id="0-screen-2"></div>
 				</div>
 				<div class="0-questions row">
-					<div class="question_title">Which sources of error do you think were there?</div>
+					<div class="question_title">__MSG_table.errorInMeasurements.question.sourceOfError.title__</div>
 					<div class="form_elements">
-						<label><input type="checkbox" name="absolute_error_checkbox_0" value="Human_Error" id="0-cb-0">Human Error</label><br>
-						<label><input type="checkbox" name="absolutee_error_checkbox_1" value="Systematic_Error" id="0-cb-1">Systematic Error</label><br>
-						<label><input type="checkbox" name="absolute_error_checkbox_2" value="Random_Error" id="0-cb-2">Random Error</label>
+						<label><input type="checkbox" name="absolute_error_checkbox_0" value="Human_Error" id="0-cb-0">__MSG_table.errorInMeasurements.question.sourceOfError.answer.0__</label><br>
+						<label><input type="checkbox" name="absolutee_error_checkbox_1" value="Systematic_Error" id="0-cb-1">__MSG_table.errorInMeasurements.question.sourceOfError.answer.1__</label><br>
+						<label><input type="checkbox" name="absolute_error_checkbox_2" value="Random_Error" id="0-cb-2">__MSG_table.errorInMeasurements.question.sourceOfError.answer.2__</label>
 					</div><!-- 
 					<div class="save_element">
 						save
@@ -100,63 +103,63 @@
 			</div>
 			
 			<div class="ErrorContainer" id="1" name="Error in an average">
-				<div class="Error_title">Error in an average</div>
+				<div class="Error_title">__MSG_tablesMenu.button.errorInAnAverage__</div>
 					
 				<div class="row">
-					<div class="p1">Insert the standard error in each measurement</div>
+					<div class="p1">__MSG_table.errorInAnAverage.inputInstructions.0__</div>
 					<div><input type="text" name="standardError" id="1-0"></div>
 				</div>
 				<div class="row">
-					<div class="p1">Insert the number of values included in the average</div>
+					<div class="p1">__MSG_table.errorInAnAverage.inputInstructions.1__</div>
 					<div><input type="text" name="numberOfValues" id="1-1"></div>
 				</div>
 				<div class="row">
-					<div class="calculate">Calculate</div>
-					<div class="reset">Reset</div>
+					<div class="calculate">__MSG_tool.button.calculate__</div>
+					<div class="reset">__MSG_tool.button.reset__</div>
 				</div>
 				<div class="row">
-					<div class="p1">The average error is:</div>
+					<div class="p1">__MSG_table.errorInAnAverage.resultInfo.0__</div>
 					<div class="screen" id="1-screen"></div>
 				</div>
 				<div class="1-questions row">
-					<div class="question_title">Is your experimental value within the error in the average?</div>
+					<div class="question_title">__MSG_table.errorInAnAverage.question.0__</div>
 					<div class="form_elements">
-						<label><input type="radio" name="average_error_radio_0" value="yes" id="1-r-0" checked>Yes</label>
-						<label><input type="radio" name="average_error_radio_0" value="no" id="1-r-1">No</label>
+						<label><input type="radio" name="average_error_radio_0" value="yes" id="1-r-0" checked>__MSG_table.standardDeviation.question.answer.yes__</label>
+						<label><input type="radio" name="average_error_radio_0" value="no" id="1-r-1">__MSG_table.standardDeviation.question.answer.no__</label>
 					</div>
 				</div>
 				<div class="1-questions row">
-					<div class="question_title">Which sources of error do you think were there?</div>
+					<div class="question_title">__MSG_table.errorInMeasurements.question.sourceOfError.title__</div>
 					<div class="form_elements">
-						<label><input type="checkbox" name="average_error_checkbox_0" value="Human_Error" id="1-cb-0">Human Error</label><br>
-						<label><input type="checkbox" name="average_error_checkbox_1" value="Systematic_Error" id="1-cb-1">Systematic Error</label><br>
-						<label><input type="checkbox" name="average_error_checkbox_2" value="Random_Error" id="1-cb-2">Random Error</label>
+						<label><input type="checkbox" name="average_error_checkbox_0" value="Human_Error" id="1-cb-0">__MSG_table.errorInMeasurements.question.sourceOfError.answer.0__</label><br>
+						<label><input type="checkbox" name="average_error_checkbox_1" value="Systematic_Error" id="1-cb-1">S__MSG_table.errorInMeasurements.question.sourceOfError.answer.1__</label><br>
+						<label><input type="checkbox" name="average_error_checkbox_2" value="Random_Error" id="1-cb-2">__MSG_table.errorInMeasurements.question.sourceOfError.answer.2__</label>
 					</div>
 				</div>
 			</div>
 			
 			<div class="ErrorContainer" id="2" name="Standard Deviation">
-				<div class="Error_title">Standard Deviation</div>
+				<div class="Error_title">__MSG_tablesMenu.button.standardDeviation__</div>
 				
 				<div class="row">
-					<div class="p1">Insert each value you have measured. Separate the values using a 'space'.</div>
+					<div class="p1">__MSG_table.standardDeviation.inputInstructions.0__</div>
 					<div><input type="text" name="sdValues" id="2-0"></div>
 				</div>
 				<div class="row">
-					<div class="calculate">Calculate</div>
-					<div class="reset">Reset</div>
+					<div class="calculate">__MSG_tool.button.calculate__</div>
+					<div class="reset">__MSG_tool.button.reset__</div>
 				</div>
 				<div class="row">
-					<div class="p1">The mean value is:</div>
+					<div class="p1">__MSG_table.standardDeviation.resultInfo.0__</div>
 					<div class="screen" id="2-screen-0"></div>
 				</div>
 				<div class="row">
-					<div class="p1">The standard deviation(&sigma;) is:</div>
+					<div class="p1">__MSG_table.standardDeviation.resultInfo.1.0__(&sigma;) is:</div>
 					<div class="screen" id="2-screen-1"></div>
 				</div>
 				
 				<div class="2-questions row">
-					<div class="question_title">Compare the absolute error to the standard deviation. Is the absolute error within the 1&sigma;, 2&sigma; or 3&sigma; of the standard deviation?</div>
+					<div class="question_title">__MSG_table.standardDeviation.question.0.title.0__ 1&sigma;, 2&sigma; __MSG_table.standardDeviation.question.0.title.1__ 3&sigma; __MSG_table.standardDeviation.question.0.title.2__</div>
 					<div class="form_elements">
 						<label><input type="radio" name="standard_deviation_radio_0" value="1sigma" id="2-r-0" checked>1&sigma;</label>
 						<label><input type="radio" name="standard_deviation_radio_0" value="2sigma" id="2-r-1">2&sigma;</label>
@@ -164,32 +167,32 @@
 					</div>
 				</div>
 				<div class="2-questions row">
-					<div class="question_title">Do you regard your measurements to be precise?</div>
+					<div class="question_title">__MSG_table.standardDeviation.question.1.title__</div>
 					<div class="form_elements">
-						<label><input type="radio" name="standard_deviation_radio_1" value="yes" id="2-r-3" checked>Yes</label>
-						<label><input type="radio" name="standard_deviation_radio_1" value="no" id="2-r-4">No</label>
+						<label><input type="radio" name="standard_deviation_radio_1" value="yes" id="2-r-3" checked>__MSG_table.standardDeviation.question.answer.yes__</label>
+						<label><input type="radio" name="standard_deviation_radio_1" value="no" id="2-r-4">__MSG_table.standardDeviation.question.answer.no__</label>
 					</div>
 				</div>
 				<div class="2-questions row">
-					<div class="question_title">Which sources of error do you think were there?</div>
+					<div class="question_title">W__MSG_table.errorInMeasurements.question.sourceOfError.title__</div>
 					<div class="form_elements">
-						<label><input type="checkbox" name="standard_deviation_checkbox_0" value="Human_Error" id="2-cb-0">Human Error</label><br>
-						<label><input type="checkbox" name="standard_deviation_checkbox_1" value="Systematic_Error" id="2-cb-1">Systematic Error</label><br>
-						<label><input type="checkbox" name="standard_deviation_checkbox_2" value="Random_Error" id="2-cb-2">Random Error</label>
+						<label><input type="checkbox" name="standard_deviation_checkbox_0" value="Human_Error" id="2-cb-0">__MSG_table.errorInMeasurements.question.sourceOfError.answer.0__</label><br>
+						<label><input type="checkbox" name="standard_deviation_checkbox_1" value="Systematic_Error" id="2-cb-1">__MSG_table.errorInMeasurements.question.sourceOfError.answer.1__</label><br>
+						<label><input type="checkbox" name="standard_deviation_checkbox_2" value="Random_Error" id="2-cb-2">__MSG_table.errorInMeasurements.question.sourceOfError.answer.2__</label>
 					</div>
 				</div>
 			</div>		
 			
 			<div class="ErrorContainer" id="4" name="Experimental values">
-				<div class="Error_title">Experimental values</div>
+				<div class="Error_title">__MSG_tablesMenu.button.experimentalValues__</div>
 				
 				<div class="row">
-					<div class="p1">Insert each value you have measured. Separate the values using a 'space'.</div>
+					<div class="p1">__MSG_table.experimentalValues.inputInstructions.0__</div>
 					<div><input type="text" name="experimentalValues" id="4-0"></div>
 				</div>				
 				<div class="row">
 					<div class="p1">
-						Insert the systematic error (if any, indicate if it is + or -).
+						__MSG_table.experimentalValues.inputInstructions.1__
 						<img src="images/more.png" alt="info" class="infoIcons" id="infoIconSystematicError">
 					</div>					
 					<div>
@@ -197,103 +200,103 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="calculate">Calculate</div>
-					<div class="reset">Reset</div>
+					<div class="calculate">__MSG_tool.button.calculate__</div>
+					<div class="reset">__MSG_tool.button.reset__</div>
 				</div>
 				<div class="row">
-					<div class="p1">The corrected set of measurements is:</div>
+					<div class="p1">__MSG_table.experimentalValues.resultInfo.0__</div>
 					<div><input type="text" name="correctedMeasurements" id="4-screen-0"></div>
 				</div>
 				<div class="row">
-					<div class="p1">The mean value is:</div>
+					<div class="p1">__MSG_table.experimentalValues.resultInfo.1__</div>
 					<div class="screen" id="4-screen-1"></div>
 				</div>
 				
 				<div class="row">
-					<div class="p1">The maximum probable error is:</div>
+					<div class="p1">__MSG_table.experimentalValues.resultInfo.2__</div>
 					<div class="screen" id="4-screen-2"></div>
 				</div>
 			</div>
 			
 			<div class="ErrorContainer" id="3" name="Sources of error">
-				<div class="Error_title"> What sources of error are there?</div>
-				There are three general types of errors which may distort experimental outcomes:
+				<div class="Error_title"> __MSG_table.sourcesOfError.title__</div>
+				__MSG_table.sourcesOfError.bullets.header__
 				<ul>
-				<li> Human error</li>
-				<li> Systematic error</li>
-				<li> Random error</li>
+				<li> __MSG_table.sourcesOfError.errorType.0.name__</li>
+				<li> __MSG_table.sourcesOfError.errorType.1.name__</li>
+				<li> __MSG_table.sourcesOfError.errorType.2.name__</li>
 				</ul>
 				<div class="justify">
-					<b>Human errors</b> are mistakes made by the experimenter. Such mistakes may come up when for example the experimenter has made a miscalculation, misread the indications of an instrument or even if the experiment itself is not set up correctly. The accuracy of the experiment lies a great deal in eliminating human errors. The experimenter must be certain that the experiment worked properly and that all necessary factors have been taken into consideration. Human errors are not experimental errors.<br><br>
-					<b>Systematic error</b> is an error that occurs in all measurements of an experiment and it is due to the instrument or the experimental set up. Systematic errors effect all measurements in the same way, meaning either increasing or decreasing the value by the same amount. In order to produce an accurate result all systematic errors must be eliminated. The diminish of systematic errors can be done by changing experimental conditions or the experimental setup.<br>
-					Systematic errors are related to the precision of the instrument. For example, lets&apos;s assume that one attempts to measure the length of a straight line with a common ruler which has scaled divisions every 0,1cm. If the actual length of the line is 3,48 cm the experimenter would measure 3,5 cm. So, the precision of the measurement depends on the precision of the instrument. In the case of the line, the correct answer would be (3,5&plusmn;0,1) cm; meaning that the length of the line is between 3,4 and 3,6 cm. Thus, all measurements should be accompanied by an error factor, also called reading error, which corresponds to the smallest subdivision of the instrument.<br>
-					Another systematic error stems from the wrong calibration of an instrument. For example, if a speedometer has as initial value 10<sup>m/s</sup> instead of zero, than all measurements would have a systematic error of 10<sup>m/s</sup>.<br>
-					Systematic errors however, don&apos;t only occur due to the precision of instruments but also due to the experimental set up. If for example one is performing an experiment about the free fall of objects in a non-vacuum environment, then the resistance of air would produce a systematic error to all measurements. <br><br>
-					<b>Random errors</b> are errors that occur because when making repeated measurements during an experiment, it is practically impossible to reproduce the exact same conditions every time. Random errors usually cause small variations among measurements but some times a measurement may be too small or too big compared to the rest. Such measurements have to be excluded from the set of data. In order to reduce this kind of errors the experimenter should repeat the measurements as many times as possible
+					<b>__MSG_table.sourcesOfError.errorType.0.text.bold__</b> __MSG_table.sourcesOfError.errorType.0.text__<br><br>
+					<b>__MSG_table.sourcesOfError.errorType.1.name__</b> __MSG_table.sourcesOfError.errorType.1.text.0__<br>
+					__MSG_table.sourcesOfError.errorType.1.text.1__ (3,5&plusmn;0,1) cm; __MSG_table.sourcesOfError.errorType.1.text.2__<br>
+					__MSG_table.sourcesOfError.errorType.1.text.3__<sup>m/s</sup>.<br>
+					__MSG_table.sourcesOfError.errorType.1.text.4__<br><br>
+					<b>__MSG_table.sourcesOfError.errorType.2.text.bold__</b> __MSG_table.sourcesOfError.errorType.2.text__
 				</div>
 			</div>			
 			<div class="ErrorContainer" id="5" name="Introduction">
-				<div class="Error_title">Introduction</div>
+				<div class="Error_title">tablesMenu.button.introduction</div>
 				<div class="justify">
-					When conducting an experiment using laboratory equipment and not simulations, the measurements of any physical quantity can never be 100% accurate. The deviation between an experimental value and the actual true value of a quantity can be due to many reasons which we usually refer to as <i>error factors</i>. Such factors can for example be the accuracy of the measuring tool, the experimental set-up used or random mistakes made by the experimenter.Let's have a look at the following example.Say we are asked to measure the diameter of the ball in the image below. 
+					__MSG_table.introduction.text.0__ 
 					<br>
 					<img src="images/ball.png" alt="introduction_ball" id="ball5">
 					<br><br>
-					If we use a ruler to measure the diameter, the answer would be 6,2 cm. However, if we measure the ball using a micrometer, which is a more accurate instrument, the answer would be 6,1845 cm. The deviation between these two measurements is due to the presence of error factors. In this case, the error is mainly coming from the accuracy of our instrument. Still, even the measurement with the micrometer, which is a more accurate instrument, could still deviate from the true value. The source of error there could be for example to the calibration of the instrument.
+					__MSG_table.introduction.text.1__
 					<br>
 					<img src="images/ruler.png" alt="introduction_ball" id="ruler">
 					<img src="images/micrometer.png" alt="introduction_ball" id="micrometer">
 					<br><br>
-					<div class="Error_title">Accuracy and precision of measurements</div>
-					Although accuracy and precision have similar meanings, in math and science they have different definitions which we need to be aware of.
+					<div class="Error_title">__MSG_table.introduction.title.1__</div>
+					__MSG_table.introduction.text.2__
 					<br><br>
-					<b>Accuracy</b> is a measure of how close a measurement is to the true value of a quantity. This can be determined by calculating the percentage error of a measurement.
+					<b>__MSG_table.introduction.text.3.bold__</b> __MSG_table.introduction.text.3__
 					<br><br>
-					<b>Precision</b> on the other hand means that a set of independent measurements of the same quantity have low deviation. This can be determined by calculating the standard deviation of our measurements.
+					<b> __MSG_table.introduction.text.4.bold__</b> __MSG_table.introduction.text.4__
 					<br><br>
-					The <i>Calculation of experimental error factors</i> tool  will help you in calculating different types of errors so you can have a better assessment of your result when performing experiments.
+					__MSG_table.introduction.text.5__
 				</div>
 			</div>
 			
 			<div class="ErrorContainer" id="6" name="Error propagation">
-				<div class="Error_title">Error propagation</div>
+				<div class="Error_title">__MSG_tablesMenu.button.errorPropagation__</div>
 				<div class="justify">
-					<b>Error propagation</b>
+					<b>__MSG_tablesMenu.button.errorPropagation__</b>
 					<br>
-					When making an experiment, it is often the case that we can't measure directly the quantity we want. Instead, we measure other ones that when combined, provide us with the desired quantity. For example we cannot measure the density of a material directly. To achieve that, we have to take measurements of mass and volume and then use the formula <img src="images/density_formula.png" alt="density_formula"> to calculate the density. So, what is the error of a measurement in such a case?
+					__MSG_table.errorPropagation.text.0__ <img src="images/density_formula.png" alt="density_formula"> __MSG_table.errorPropagation.text.1__
 					<br>
-					The error of our measurement depends on the combination of the individual measurements, or in other words in the type of formula we are using. Thus we have to use each case separately. In all the cases below we refer to 'A' as the quantity we seek to measure through other quantities; x, y, z as the measured quantities A depends up on; and 'c' is a given constant. So in our previous example A would be the density and x,y would be the mass and volume respectively while we have no z and no c in our equation. Respectively the errors for each quantity are &delta;Α, &delta;x, &delta;y and &delta;z.
+					__MSG_table.errorPropagation.text.2__ &delta;A, &delta;x, &delta;y __MSG_table.errorPropagation.text.3__ &delta;z.
 					<br><br>
-					<u>Multiplication with a constant</u>
+					<u>__MSG_table.errorPropagation.header.1__</u>
 					<br>
-					If A is the product of multiplying a quantity with a constant (called 'c') 
+					__MSG_table.errorPropagation.text.4__ 
 					<br><img src="images/propagation_formulas_1.png" alt="propagation_formula">
 					<br>
-					Then the error &delta;Α for A is
+					__MSG_table.errorPropagation.text.5__ &delta;A __MSG_table.errorPropagation.text.6__
 					<br><img src="images/propagation_formulas_2.png" alt="propagation_formula">
 					<br><br>
-					<u>Addition or subtraction of measured quantities</u>
+					<u>__MSG_table.errorPropagation.header.2__</u>
 					<br>
-					If A is the sum or difference of x, y and z (it makes no difference whether we have '+' or '-')
+					__MSG_table.errorPropagation.text.7__
 					<br><img src="images/propagation_formulas_3.png" alt="propagation_formula">
 					<br>
-					Then the error &delta;Α for A  is
+					__MSG_table.errorPropagation.text.5__ &delta;A __MSG_table.errorPropagation.text.6__
 					<br><img src="images/propagation_formulas_4.png" alt="propagation_formula">
 					<br><br>
-					<u>Multiplication or division of measured quantities</u>
+					<u>__MSG_table.errorPropagation.header.3__</u>
 					<br>
-					If A is the product of x,y and z (it makes no difference if it is multiplication or division) and a constant c (if there is no constant in your equation just set c=1)
+					__MSG_table.errorPropagation.text.8__
 					<br><img src="images/propagation_formulas_5.png" alt="propagation_formula">
 					<br>
-					Then the error &delta;Α for A is
+					__MSG_table.errorPropagation.text.5__ &delta;A __MSG_table.errorPropagation.text.6__
 					<br><img src="images/propagation_formulas_6.png" alt="propagation_formula">
 					<br><br>
-					<u>Polynomial functions</u>
+					<u>__MSG_table.errorPropagation.header.4__</u>
 					<br>
-					If A is a polynomial function of one variable, x (c again being a constant)
+					__MSG_table.errorPropagation.text.9__
 					<br><img src="images/propagation_formulas_7.png" alt="propagation_formula">
 					<br>
-					Then the error &delta;Α for A is
+					__MSG_table.errorPropagation.text.5__ &delta;A __MSG_table.errorPropagation.text.6__
 					<br><img src="images/propagation_formulas_8.png" alt="propagation_formula">	
 				</div>
 			</div>
@@ -301,48 +304,48 @@
 
 			<div class="error_info" id="info-SystematicError" name="Systematic error info">
 				<br>
-				<b>Systematic errors</b> are errors which occur in all measurements when performing an experiment.
+				<b>__MSG_errorInfo.systematicError.0__</b> __MSG_errorInfo.systematicError.1__
 				<br>
-				Before starting your experiment, you need check your instruments for possible zero error. To do that, set your instrument to zero and check its indication. Does it say zero or does it give another value? If so, that value is considered to be a systematic error and you will have to correct all your measurements by subtracting it.  
+				__MSG_errorInfo.systematicError.1__ 
 			</div>
 			<div class="error_info" id="info-TheoreticalValue" name="Theoretical value info">
-				The <b>theoretical value</b> of a quantity can refer to different things. If we are trying to verify a given theory then the theoretical value is the value derived from the respective mathematical equation.For example, let's say we are performing an experiment to measure the time in which an object will reach the ground from a given height according to the laws of free fall. Then, the theoretical value will be the one derived from the equation<img src="images/theoritical_value_formula.png" alt="asdf">whereas the experimental value would be the one we actually measured during the experiment using a stop watch.
+				__MSG_errorInfo.theoreticalValue.0__ <b>__MSG_errorInfo.theoreticalValue.1__</b> __MSG_errorInfo.theoreticalValue.2__<img src="images/theoritical_value_formula.png" alt="asdf">__MSG_errorInfo.theoreticalValue.3__
 				<br>
-				Another case is when we are measuring quantities whose value is already known from the bibliography. For example, let's say we want to measure the density of glycerin. In that case, in our experiment we would be taking measurements of mass and volume and calculate the density using the equation<img src="images/density_formula.png" alt="asdf">The theoretical value would be the one derived from bibliography which is 1.261 g/cm<sup>3</sup>. 
+				__MSG_errorInfo.theoreticalValue.4__<img src="images/density_formula.png" alt="asdf">__MSG_errorInfo.theoreticalValue.5__<sup>3</sup>. 
 			</div>
 			<div class="error_info" id="info-ExperimentalValue" name="Experimental values info">
-				<br><br>The <b>experimental value</b> is the one measured while performing an experiment. If you have collected a set of measurements, the experimental value is the mean of the set of measurements.
+				<br><br>__MSG_errorInfo.experimentalValue.0__ <b>__MSG_errorInfo.experimentalValue.1__</b> __MSG_errorInfo.experimentalValue.2__
 			</div>
 			<div class="error_info" id="info-0" name="Error in measurements Info">
 				<br>
-				When we present a measurement it is also important to present the error of that measurement. We usually accompany our measurement with either the <b>absolute error</b>, or the relative error. In some cases we might also wish to present the <b>relative error</b> as percentage errors.  Presenting the absolute or the relative error along with the actual measurement allows people to decide to what degree our measurement is valid and reliable.
-				The <b>absolute error</b> is the magnitude of the difference between the theoretical and the experimental value.
+				__MSG_errorInfo.errorInMeasurements.0__ <b>__MSG_errorInfo.errorInMeasurements.1__</b>, __MSG_errorInfo.errorInMeasurements.11__ <b>__MSG_errorInfo.errorInMeasurements.3__</b>. __MSG_errorInfo.errorInMeasurements.2__ <b>__MSG_errorInfo.errorInMeasurements.3__</b> __MSG_errorInfo.errorInMeasurements.4__
+				__MSG_errorInfo.errorInMeasurements.5__ <b>__MSG_errorInfo.errorInMeasurements.6__</b> __MSG_errorInfo.errorInMeasurements.7__
 				<br><br><img src="images/absolute_error_formula.png" alt="absolute_error_formula">
-				<br><br>The <b>relative error</b> is the absolute error divided by the magnitude of the theoretical value. Ideally the relative error must be zero or very close to zero.
+				<br><br>__MSG_errorInfo.errorInMeasurements.8__ <b>relative error</b> is the absolute error divided by the magnitude of the theoretical value. Ideally the relative error must be zero or very close to zero.
 				<br><br><img src="images/relative_error_formula.png" alt="relative_error_formula">
-				<br><br>The <b>percentage error</b> is the relative error expressed in terms of percentage.
+				<br><br>__MSG_errorInfo.errorInMeasurements__ <b>__MSG_errorInfo.errorInMeasurements__</b> __MSG_errorInfo.errorInMeasurements__
 				<br><br><img src="images/percentage_error_formula.png" alt="percentage_error_formula">
 			</div>
 			<div class="error_info" id="info-1" name="Info">
-				<b>Error in an average:</b>When repeating the same measurement a number of times, we produce a set of values and then the average value is calculated. Respectively, one must also calculate the average error.
+				<b>__MSG_errorInfo.errorInAverage.0__</b>__MSG_errorInfo.errorInAverage.1__
 				<br><br><img src="images/average_error_formula.png" alt="average_error_formula">
 			</div>
 			<div class="error_info justify" id="info-2" name="Standard deviation info">
-				<b>Standard deviation (&sigma;)</b> is a statistical measurement that is used to illustrate the spread of an experiment's values relative to an average value or standard value. Low standard deviation means that the values are close to the mean value. Thus, the lower the standard deviation is, the more reliable our measurements are. In the picture below, both set of measurements have the same mean value. The measurements on the left have a high standards deviation whereas the measurements on the right have low standard deviation. 
+				<b>__MSG_errorInfo.standardDeviation.0__ (&sigma;)</b> __MSG_errorInfo.standardDeviation.1__ 
 				<br><br><img src="images/standard_deviation_example.png" alt="standard_deviation_example">
 				<br><br>
-				However, you must always keep in mind that low standard deviation only indicates that the set of measurements have a good <b>precision</b>. High precision means that the measurements have high reliability but this does not mean that the average value is true. Thus the standard deviation can inform us on how <b>precise</b> our measurements are but it cannot inform us on how <b>precise</b> they are (meaning how close to the true or theoretical value).
+				__MSG_errorInfo.standardDeviation.2__ <b>__MSG_errorInfo.standardDeviation.3__</b>. __MSG_errorInfo.standardDeviation.4__ <b>__MSG_errorInfo.standardDeviation.5__</b> __MSG_errorInfo.standardDeviation.6__ <b>__MSG_errorInfo.standardDeviation.7__</b> __MSG_errorInfo.standardDeviation.8__
 				<br><br>
-				The formula to calculate the standard deviation is: 
+				__MSG_errorInfo.standardDeviation.9__ 
 				<br><br><img src="images/standard_deviation_error_formula.png" alt="standard_deviation_error_formula">
 			</div>
 			<div class="error_info" id="info-4" name="Maximum probable error info">
-				The <b>maximum probable error</b> is the maximum deviation from the mean.
+				__MSG_errorInfo.maximumProbableError.0__ <b>__MSG_errorInfo.maximumProbableError.1__</b> __MSG_errorInfo.maximumProbableError.2__
 				<br><br><img src="images/maximum_probable_error_formula.png" alt="maximum_probable_error_formula">
 			</div>
-		</div>
-	
+		</div>	
 	</body>
+
   ]]>
   </Content>
 </Module>

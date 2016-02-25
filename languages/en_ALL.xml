@@ -1,0 +1,156 @@
+<messagebundle mails="s.tsourlidakis@hotmail.com,eleftheria@ea.gr">
+	<msg name="tool.title">Experimental errors calculator</msg>
+    
+    
+	<msg name="tablesMenu.button.introduction">Introduction</msg>
+	<msg name="tablesMenu.button.sourcesOfError">Sources of error</msg>
+	<msg name="tablesMenu.button.errorPropagation">Error propagation</msg>
+	<msg name="tablesMenu.button.experimentalValues">Experimental values</msg>
+	<msg name="tablesMenu.text.directions">Please select the type of error you wish to calculate:</msg>
+	<msg name="tablesMenu.button.errorInMeasurements">Error in measurements</msg>
+	<msg name="tablesMenu.button.standardDeviation">Standard Deviation</msg>
+	<msg name="tablesMenu.button.errorInAnAverage">Error in an average</msg>
+	
+	
+	<msg name="tool.button.calculate">Calculate</msg>
+	<msg name="tool.button.reset">Reset</msg>
+	
+	
+	<msg name="table.introduction.text.0">When conducting an experiment using laboratory equipment and not simulations, the measurements of any physical quantity can never be 100% accurate. The deviation between an experimental value and the actual true value of a quantity can be due to many reasons which we usually refer to as error factors. Such factors can for example be the accuracy of the measuring tool, the experimental set-up used or random mistakes made by the experimenter.Let's have a look at the following example.Say we are asked to measure the diameter of the ball in the image below.</msg>
+	<msg name="table.introduction.text.1">If we use a ruler to measure the diameter, the answer would be 6,2 cm. However, if we measure the ball using a micrometer, which is a more accurate instrument, the answer would be 6,1845 cm. The deviation between these two measurements is due to the presence of error factors. In this case, the error is mainly coming from the accuracy of our instrument. Still, even the measurement with the micrometer, which is a more accurate instrument, could still deviate from the true value. The source of error there could be for example to the calibration of the instrument.</msg>
+	<msg name="table.introduction.title.1">Accuracy and precision of measurements</msg>
+	<msg name="table.introduction.text.2">Although accuracy and precision have similar meanings, in math and science they have different definitions which we need to be aware of.</msg>
+	<msg name="table.introduction.text.3.bold">Accuracy</msg>
+	<msg name="table.introduction.text.3">is a measure of how close a measurement is to the true value of a quantity. This can be determined by calculating the percentage error of a measurement.</msg>
+	<msg name="table.introduction.text.4.bold">Precision</msg>
+	<msg name="table.introduction.text.4">on the other hand means that a set of independent measurements of the same quantity have low deviation. This can be determined by calculating the standard deviation of our measurements.</msg>
+	<msg name="table.introduction.text.5">The Calculation of experimental error factors tool  will help you in calculating different types of errors so you can have a better assessment of your result when performing experiments.</msg>
+    
+    
+	<msg name="table.sourcesOfError.title">What sources of error are there?</msg>
+	<msg name="table.sourcesOfError.bullets.header">There are three general types of errors which may distort experimental outcomes:</msg>
+	<msg name="table.sourcesOfError.errorType.0.name">Human error</msg>
+	<msg name="table.sourcesOfError.errorType.1.name">Systematic error</msg>
+	<msg name="table.sourcesOfError.errorType.2.name">Random error</msg>
+	<msg name="table.sourcesOfError.errorType.0.text.bold">Human errors</msg>
+	<msg name="table.sourcesOfError.errorType.0.text">are mistakes made by the experimenter. Such mistakes may come up when for example the experimenter has made a miscalculation, misread the indications of an instrument or even if the experiment itself is not set up correctly. The accuracy of the experiment lies a great deal in eliminating human errors. The experimenter must be certain that the experiment worked properly and that all necessary factors have been taken into consideration. Human errors are not experimental errors.</msg>
+	<msg name="table.sourcesOfError.errorType.1.text.0">is an error that occurs in all measurements of an experiment and it is due to the instrument or the experimental set up. Systematic errors effect all measurements in the same way, meaning either increasing or decreasing the value by the same amount. In order to produce an accurate result all systematic errors must be eliminated. The diminish of systematic errors can be done by changing experimental conditions or the experimental setup.</msg>
+	<msg name="table.sourcesOfError.errorType.1.text.1">Systematic errors are related to the precision of the instrument. For example, lets assume that one attempts to measure the length of a straight line with a common ruler which has scaled divisions every 0,1cm. If the actual length of the line is 3,48 cm the experimenter would measure 3,5 cm. So, the precision of the measurement depends on the precision of the instrument. In the case of the line, the correct answer would be</msg>
+	<msg name="table.sourcesOfError.errorType.1.text.2">meaning that the length of the line is between 3,4 and 3,6 cm. Thus, all measurements should be accompanied by an error factor, also called reading error, which corresponds to the smallest subdivision of the instrument.</msg>
+	<msg name="table.sourcesOfError.errorType.1.text.3">Another systematic error stems from the wrong calibration of an instrument. For example, if a speedometer has as initial value 10<sup>m/s</sup> instead of zero, than all measurements would have a systematic error of 10</msg>
+	<msg name="table.sourcesOfError.errorType.1.text.4">Systematic errors however, don't only occur due to the precision of instruments but also due to the experimental set up. If for example one is performing an experiment about the free fall of objects in a non-vacuum environment, then the resistance of air would produce a systematic error to all measurements.</msg>
+	<msg name="table.sourcesOfError.errorType.2.text.bold">Random errors</msg>
+	<msg name="table.sourcesOfError.errorType.2.text">are errors that occur because when making repeated measurements during an experiment, it is practically impossible to reproduce the exact same conditions every time. Random errors usually cause small variations among measurements but some times a measurement may be too small or too big compared to the rest. Such measurements have to be excluded from the set of data. In order to reduce this kind of errors the experimenter should repeat the measurements as many times as possible</msg>
+	
+	
+	<msg name="table.errorPropagation.text.0">When making an experiment, it is often the case that we can't measure directly the quantity we want. Instead, we measure other ones that when combined, provide us with the desired quantity. For example we cannot measure the density of a material directly. To achieve that, we have to take measurements of mass and volume and then use the formula</msg>
+	<msg name="table.errorPropagation.text.1">to calculate the density. So, what is the error of a measurement in such a case?</msg>
+	<msg name="table.errorPropagation.text.2">The error of our measurement depends on the combination of the individual measurements, or in other words in the type of formula we are using. Thus we have to use each case separately. In all the cases below we refer to 'A' as the quantity we seek to measure through other quantities; x, y, z as the measured quantities A depends up on; and 'c' is a given constant. So in our previous example A would be the density and x,y would be the mass and volume respectively while we have no z and no c in our equation. Respectively the errors for each quantity are</msg>
+	<msg name="table.errorPropagation.text.3">and</msg>
+	<msg name="table.errorPropagation.header.1">Multiplication with a constant</msg>
+	<msg name="table.errorPropagation.text.4">If A is the product of multiplying a quantity with a constant (called 'c') </msg>
+	<msg name="table.errorPropagation.text.5">Then the error</msg>
+	<msg name="table.errorPropagation.text.6">for A is</msg>
+	<msg name="table.errorPropagation.header.2">Addition or subtraction of measured quantities</msg>
+	<msg name="table.errorPropagation.text.7">If A is the sum or difference of x, y and z (it makes no difference whether we have '+' or '-')</msg>
+	<msg name="table.errorPropagation.header.3">Multiplication or division of measured quantities</msg>
+	<msg name="table.errorPropagation.text.8">If A is the product of x,y and z (it makes no difference if it is multiplication or division) and a constant c (if there is no constant in your equation just set c=1)</msg>
+	<msg name="table.errorPropagation.header.4">Polynomial functions</msg>
+	<msg name="table.errorPropagation.text.9">If A is a polynomial function of one variable, x (c again being a constant)</msg>
+    
+    
+	<msg name="table.experimentalValues.inputInstructions.0">Insert each value you have measured. Separate the values using a 'space'.</msg>
+	<msg name="table.experimentalValues.inputInstructions.1">Insert the systematic error (if any, indicate if it is + or -).</msg>
+	<msg name="table.experimentalValues.resultInfo.0">The corrected set of measurements is:</msg>
+	<msg name="table.experimentalValues.resultInfo.0.1">You have now calculated the mean value of your measurements\' set. This mean value is your experimental value.</msg>
+	<msg name="table.experimentalValues.resultInfo.0.2">The mean value of the corrected measurements is:</msg>
+	<msg name="table.experimentalValues.resultInfo.1">The mean value is:</msg>
+	<msg name="table.experimentalValues.resultInfo.2">The maximum probable error is:</msg>
+	
+  
+	<msg name="table.errorInMeasurements.inputInstructions.0">Insert the theoretical value </msg>
+	<msg name="table.errorInMeasurements.inputInstructions.1">Insert the experimental value </msg>
+	<msg name="table.errorInMeasurements.resultInfo.0">The absolute error is:</msg>
+	<msg name="table.errorInMeasurements.resultInfo.1">The relative error is:</msg>
+	<msg name="table.errorInMeasurements.resultInfo.2">The percentage error is:</msg>
+	<msg name="table.errorInMeasurements.question.sourceOfError.title">Which sources of error do you think were there?</msg>
+	<msg name="table.errorInMeasurements.question.sourceOfError.answer.0">Human Error</msg>
+	<msg name="table.errorInMeasurements.question.sourceOfError.answer.1">Systematic Error</msg>
+	<msg name="table.errorInMeasurements.question.sourceOfError.answer.2">Random Error</msg>
+	
+	
+	<msg name="table.standardDeviation.inputInstructions.0">Insert each value you have measured. Separate the values using a 'space'.</msg>
+	<msg name="table.standardDeviation.resultInfo.0">The mean value is:</msg>
+	<msg name="table.standardDeviation.resultInfo.1.0">The standard deviation</msg>
+	<msg name="table.standardDeviation.resultInfo.1.1"> is:</msg>
+	<msg name="table.standardDeviation.question.0.title.0">Compare the absolute error to the standard deviation. Is the absolute error within the</msg>
+	<msg name="table.standardDeviation.question.0.title.1">or</msg>
+	<msg name="table.standardDeviation.question.0.title.2">of the standard deviation?</msg>
+	<msg name="table.standardDeviation.question.1.title">Do you regard your measurements to be precise?</msg>
+	<msg name="table.standardDeviation.question.answer.yes">Yes</msg>
+	<msg name="table.standardDeviation.question.answer.no">No</msg>
+    
+    
+	<msg name="table.errorInAnAverage.inputInstructions.0">Insert the standard error in each measurement</msg>
+	<msg name="table.errorInAnAverage.inputInstructions.1">Insert the number of values included in the average</msg>
+	<msg name="table.errorInAnAverage.resultInfo.0">The average error is:</msg>
+	<msg name="table.errorInAnAverage.question.0">Is your experimental value within the error in the average?</msg>
+    
+    
+	<msg name="errorInfo.systematicError.0">Systematic errors</msg>
+	<msg name="errorInfo.systematicError.1">are errors which occur in all measurements when performing an experiment.</msg>
+	<msg name="errorInfo.systematicError.1">Before starting your experiment, you need check your instruments for possible zero error. To do that, set your instrument to zero and check its indication. Does it say zero or does it give another value? If so, that value is considered to be a systematic error and you will have to correct all your measurements by subtracting it.</msg>
+	
+	<msg name="errorInfo.theoreticalValue.0">The</msg>
+	<msg name="errorInfo.theoreticalValue.1">theoretical value</msg>
+	<msg name="errorInfo.theoreticalValue.2">of a quantity can refer to different things. If we are trying to verify a given theory then the theoretical value is the value derived from the respective mathematical equation.For example, let's say we are performing an experiment to measure the time in which an object will reach the ground from a given height according to the laws of free fall. Then, the theoretical value will be the one derived from the equation</msg>
+	<msg name="errorInfo.theoreticalValue.3">whereas the experimental value would be the one we actually measured during the experiment using a stop watch.</msg>
+	<msg name="errorInfo.theoreticalValue.4">Another case is when we are measuring quantities whose value is already known from the bibliography. For example, let's say we want to measure the density of glycerin. In that case, in our experiment we would be taking measurements of mass and volume and calculate the density using the equation</msg>
+	<msg name="errorInfo.theoreticalValue.5">The theoretical value would be the one derived from bibliography which is 1.261 g/cm</msg>
+	
+	<msg name="errorInfo.experimentalValue.0">The</msg>
+	<msg name="errorInfo.experimentalValue.1">experimental value</msg>
+	<msg name="errorInfo.experimentalValue.2">is the one measured while performing an experiment. If you have collected a set of measurements, the experimental value is the mean of the set of measurements.</msg>
+	
+	<msg name="errorInfo.errorInMeasurements.0">When we present a measurement it is also important to present the error of that measurement. We usually accompany our measurement with either the</msg>
+	<msg name="errorInfo.errorInMeasurements.1">absolute error</msg>
+	<msg name="errorInfo.errorInMeasurements.11">or the</msg>
+	<msg name="errorInfo.errorInMeasurements.2">In some cases we might also wish to present the</msg>
+	<msg name="errorInfo.errorInMeasurements.3">relative error</msg>
+	<msg name="errorInfo.errorInMeasurements.4">as percentage errors.  Presenting the absolute or the relative error along with the actual measurement allows people to decide to what degree our measurement is valid and reliable.</msg>
+	<msg name="errorInfo.errorInMeasurements.5">The</msg>
+	<msg name="errorInfo.errorInMeasurements.6">absolute error</msg>
+	<msg name="errorInfo.errorInMeasurements.7">is the magnitude of the difference between the theoretical and the experimental value.</msg>
+	<msg name="errorInfo.errorInMeasurements.8">The</msg>
+	<msg name="errorInfo.errorInMeasurements.9">relative error</msg>
+	<msg name="errorInfo.errorInMeasurements.10">is the absolute error divided by the magnitude of the theoretical value. Ideally the relative error must be zero or very close to zero.</msg>
+	<msg name="errorInfo.errorInMeasurements">The</msg>
+	<msg name="errorInfo.errorInMeasurements">percentage error</msg>
+	<msg name="errorInfo.errorInMeasurements">is the relative error expressed in terms of percentage.</msg>
+	
+	<msg name="errorInfo.errorInAverage.0">Error in an average:</msg>
+	<msg name="errorInfo.errorInAverage.1">When repeating the same measurement a number of times, we produce a set of values and then the average value is calculated. Respectively, one must also calculate the average error.</msg>
+	
+	<msg name="errorInfo.standardDeviation.0">Standard deviation</msg>
+	<msg name="errorInfo.standardDeviation.1">is a statistical measurement that is used to illustrate the spread of an experiment's values relative to an average value or standard value. Low standard deviation means that the values are close to the mean value. Thus, the lower the standard deviation is, the more reliable our measurements are. In the picture below, both set of measurements have the same mean value. The measurements on the left have a high standards deviation whereas the measurements on the right have low standard deviation.</msg>
+	<msg name="errorInfo.standardDeviation.2">However, you must always keep in mind that low standard deviation only indicates that the set of measurements have a good</msg>
+	<msg name="errorInfo.standardDeviation.3">precision</msg>
+	<msg name="errorInfo.standardDeviation.4">High precision means that the measurements have high reliability but this does not mean that the average value is true. Thus the standard deviation can inform us on how</msg>
+	<msg name="errorInfo.standardDeviation.5">precise</msg>
+	<msg name="errorInfo.standardDeviation.6">our measurements are but it cannot inform us on how</msg>
+	<msg name="errorInfo.standardDeviation.7">precise</msg>
+	<msg name="errorInfo.standardDeviation.8">they are (meaning how close to the true or theoretical value).</msg>
+	<msg name="errorInfo.standardDeviation.9">The formula to calculate the standard deviation is:</msg>
+	
+	<msg name="errorInfo.maximumProbableError.0">The</msg>
+	<msg name="errorInfo.maximumProbableError.1">maximum probable error</msg>
+	<msg name="errorInfo.maximumProbableError.2">is the maximum deviation from the mean.</msg>
+	
+	<msg name="js.invalidInput.0.0">Invalid input</msg>
+	<msg name="js.invalidInput.0.1">Only numerical values are allowed.</msg>
+	<msg name="js.invalidInput.1">Theoretical value can't be 0.</msg>
+	<msg name="js.invalidInput.2">The number of values included in the average can't be 0.</msg>
+	<msg name="js.invalidInput.3.0">For decimal numbers please use </msg>
+	<msg name="js.invalidInput.3.1">In order to separate values use space</msg>
+	<msg name="js.invalidInput.3.2">More than one values should be defined.</msg>
+</messagebundle>

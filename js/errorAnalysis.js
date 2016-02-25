@@ -15,10 +15,10 @@ var documentType = "errorAnalysisInstance";
 var logItems = {};	//The object that contains the information about each element in order to log changes.
 var actionLogger, storageHandler, errorAnalysisToolMetadataHandler;
 var resourceContent = {};
-
+var langPrefs = new gadgets.Prefs();	//text for pop-ups
 $( document ).ready(function() {
 	n = document.getElementsByClassName("ErrorContainer").length;
-
+	
 	init_log_items();
 	init_golab_handlers();
 	event_handlers();
@@ -264,6 +264,7 @@ function reset_table(id) {
 	{
 		$('#'+id+'-screen-0').closest('.row').hide();	//Hide "corrected set of measurement" screen.
 		$('#'+id+'-screen-1').closest('.row').find('.p1').html('The mean value is:');
+		$('#'+id+'-screen-1').closest('.row').find('.p1').html(langPrefs.getMsg("table.experimentalValues.resultInfo.1")+':');
 	}
 	if(active!=-1)	//Don't log the action when the document gets initialized
 		actionLogger.log("cancel", logItems[id]);
@@ -311,14 +312,14 @@ function enable_error_buttons() {
 function calculateMeasurementError() {
 	var table = tables["Error in measurements"];	//table id
 	if( !check_input(table) ) {
-		alert("Invalid input\nOnly numerical values are allowed.");
+		alert(langPrefs.getMsg('js.invalidInput.0.0')+"\n"+langPrefs.getMsg('js.invalidInput.0.1'));
 		return;
 	}
 	
 	var theoretical = +document.getElementById(table+'-0').value;	//+ will cast any spaces to zero.
 	document.getElementById(table+'-0').value = theoretical;	//Replace the input with the numerical value in order to remove the spaces.
 	if(theoretical==0) {
-		alert("Theoretical value can't be 0.");
+		alert(langPrefs.getMsg('js.invalidInput.1'));
 		return;
 	}
 	var experimental = +document.getElementById(table+'-1').value;
@@ -341,7 +342,7 @@ function calculateMeasurementError() {
 function calculateAverageError() {
 	var table = tables["Error in an average"];	//table id
 	if( !check_input(table) ) {
-		alert("Invalid input\nOnly numerical values are allowed.");
+		alert(langPrefs.getMsg('js.invalidInput.0.0')+"\n"+langPrefs.getMsg('js.invalidInput.0.1'));
 		return;
 	}
 	var standar = +document.getElementById(table+'-0').value;	//+ will cast any spaces to zero
@@ -349,7 +350,7 @@ function calculateAverageError() {
 	var nV = +document.getElementById(table+'-1').value;
 	document.getElementById(table+'-1').value = nV;
 	if(nV==0) {
-		alert("The number of values included in the average can't be 0.");
+		alert(langPrefs.getMsg('js.invalidInput.2'));
 		return;
 	}
 	document.getElementById(table+'-screen').innerHTML=(standar/Math.sqrt(nV)).toFixed(3);
@@ -364,7 +365,8 @@ function calculateStandardDeviation() {
 	var i;
 	var table = tables["Standard Deviation"];	//table id
 	if( !check_input(table) ) {
-		alert("Invalid input\nOnly numerical values are allowed.\nFor decimal numbers please use \".\"\nIn order to separate values use space\nMore than one values should be defined.");
+		/*alert(langPrefs.getMsg('js.invalidInput.3.0')+"\n"+\nFor decimal numbers please use \".\"\nIn order to separate values use space\nMore than one values should be defined.");*/
+		alert(langPrefs.getMsg('js.invalidInput.0.0')+"\n"+langPrefs.getMsg('js.invalidInput.0.1')+"\n"+langPrefs.getMsg('js.invalidInput.3.0')+"\".\"\n"+langPrefs.getMsg('js.invalidInput.3.1')+"\n"+langPrefs.getMsg('js.invalidInput.3.2'));
 		return;
 	}
 	var values = document.getElementById(table+'-0').value.split(" ");
@@ -400,7 +402,8 @@ function calculateMeanValue() {
 		systematicError=0;
 	}
 	if( !check_input(table) ) {
-		alert("Invalid input\nOnly numerical values are allowed.\nFor decimal numbers please use \".\"\nIn order to separate values use space\nMore than one values should be defined.");
+		/*alert(langPrefs.getMsg('js.invalidInput.3.0')+"\n"+\nFor decimal numbers please use \".\"\nIn order to separate values use space\nMore than one values should be defined.");*/
+		alert(langPrefs.getMsg('js.invalidInput.0.0')+"\n"+langPrefs.getMsg('js.invalidInput.0.1')+"\n"+langPrefs.getMsg('js.invalidInput.3.0')+"\".\"\n"+langPrefs.getMsg('js.invalidInput.3.1')+"\n"+langPrefs.getMsg('js.invalidInput.3.2'));
 		return;
 	}
 	$('#'+table+'-screen'+'-0').closest('.row').hide();
