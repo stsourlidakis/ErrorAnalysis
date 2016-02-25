@@ -227,36 +227,6 @@ input[type=text] {
 	
 	float:right;
 }
-input[type=text].propagationInp{
-	height: 28px;
-	width: 40px;
-	float: left;
-}
-input[type=text].propagationInp:disabled{
-	height: 28px;
-	width: 40px;
-	background: #ABAEFF;
-}
-.propagation_formula{
-	cursor: pointer;
-	margin-bottom: 7px;
-	margin-top: 7px;
-	float: left;
-}
-.active_propagation_formula{
-	box-shadow: 0px -1px 6px 3px rgba(150,150,160,1);
-	border-radius: 5px;
-	cursor: pointer;
-	opacity: 1;
-}
-.propagationNone{
-	clear: both;
-	float: left;
-	cursor: pointer;
-	margin-bottom: 15px;
-	margin-top: 8px;
-	margin-left: 0;
-}
 .calculate {
 	float: left;
 	width: 130px;
@@ -361,28 +331,32 @@ input[type=text].propagationInp:disabled{
 	height: auto;
 }
 
-.activeButton {
-  border: 1px solid #939597;
-  border-radius: 2px;
-  background-color: #5050D2;
-  background-size: contain;
-  padding: 4px;
-  cursor: pointer;
-}
-.activeButton:hover {
-  background-color: #5050D2;
-  background-size: contain;
-}
-.activeButton:active {
-  background-color: #5050D2;
-  background-size: contain;
-}
-.save_element{
+.controlsContainer{
 	width: auto;
-	float: right;
+	float: left;
 	clear: both;
+	list-style-type: none;
 	margin-top: 15px;
 	margin-bottom: 10px;
+	padding: 4px;
+}
+.controlsContainer li{
+	display: inline;
+	color: #5050d2;
+	
+	cursor: pointer;
+}
+.controlsContainer li:hover {
+	color: #050592;
+}
+.controlsContainer li :active {
+	font-weight: bolder;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 
 .error_info{
