@@ -15,7 +15,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			Error Analysis v0.9
+			Error Analysis
 		</title>
 		
 		<link rel="stylesheet" type="text/css" href="./css/theme.css">
@@ -132,7 +132,7 @@
 					<div class="question_title">__MSG_table.errorInMeasurements.question.sourceOfError.title__</div>
 					<div class="form_elements">
 						<label><input type="checkbox" name="average_error_checkbox_0" value="Human_Error" id="1-cb-0">__MSG_table.errorInMeasurements.question.sourceOfError.answer.0__</label><br>
-						<label><input type="checkbox" name="average_error_checkbox_1" value="Systematic_Error" id="1-cb-1">S__MSG_table.errorInMeasurements.question.sourceOfError.answer.1__</label><br>
+						<label><input type="checkbox" name="average_error_checkbox_1" value="Systematic_Error" id="1-cb-1">__MSG_table.errorInMeasurements.question.sourceOfError.answer.1__</label><br>
 						<label><input type="checkbox" name="average_error_checkbox_2" value="Random_Error" id="1-cb-2">__MSG_table.errorInMeasurements.question.sourceOfError.answer.2__</label>
 					</div>
 				</div>
