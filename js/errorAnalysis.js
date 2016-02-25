@@ -364,6 +364,7 @@ function calculateAverageError() {
 function calculateStandardDeviation() {
 	var i;
 	var table = tables["Standard Deviation"];	//table id
+	document.getElementById(table+'-0').value = document.getElementById(table+'-0').value.replace(/\s/g, " ").replace(/\s+/g," ").trim();
 	if( !check_input(table) ) {
 		/*alert(langPrefs.getMsg('js.invalidInput.3.0')+"\n"+\nFor decimal numbers please use \".\"\nIn order to separate values use space\nMore than one values should be defined.");*/
 		alert(langPrefs.getMsg('js.invalidInput.0.0')+"\n"+langPrefs.getMsg('js.invalidInput.0.1')+"\n"+langPrefs.getMsg('js.invalidInput.3.0')+"\".\"\n"+langPrefs.getMsg('js.invalidInput.3.1')+"\n"+langPrefs.getMsg('js.invalidInput.3.2'));
@@ -401,6 +402,7 @@ function calculateMeanValue() {
 		$('#4-1').val(0);
 		systematicError=0;
 	}
+	document.getElementById(table+'-0').value = document.getElementById(table+'-0').value.replace(/\s/g, " ").replace(/\s+/g," ").trim();
 	if( !check_input(table) ) {
 		/*alert(langPrefs.getMsg('js.invalidInput.3.0')+"\n"+\nFor decimal numbers please use \".\"\nIn order to separate values use space\nMore than one values should be defined.");*/
 		alert(langPrefs.getMsg('js.invalidInput.0.0')+"\n"+langPrefs.getMsg('js.invalidInput.0.1')+"\n"+langPrefs.getMsg('js.invalidInput.3.0')+"\".\"\n"+langPrefs.getMsg('js.invalidInput.3.1')+"\n"+langPrefs.getMsg('js.invalidInput.3.2'));
@@ -451,13 +453,13 @@ function check_input(table)	{	//Returns true for valid values on the selected er
 		for (var i = 0; i < values.length; i++) {
 			if(isNaN(values[i]) || values[i]=="" || values[i]==" ")return false;
 		}
-		var inputValue=document.getElementById(table+'-1').value;
+		var inputValue=document.getElementById(table+'-1').value.trim();
 		if(isNaN(inputValue) || inputValue=="" || ( ( inputValue.indexOf(' ')==0 && inputValue.length-1==0 ) || ( inputValue.indexOf(' ')==inputValue.length-1 && inputValue.length-1==0 ) ) )return false;
 	}
 	else {
-		var inputValue=document.getElementById(table+'-0').value;
+		var inputValue=document.getElementById(table+'-0').value.trim();
 		if(isNaN(inputValue) || inputValue=="" || ( ( inputValue.indexOf(' ')==0 && inputValue.length-1==0 ) || ( inputValue.indexOf(' ')==inputValue.length-1 && inputValue.length-1==0 ) ) )return false;	//Third argument checks for a space allowing only one at the start or at the end of the number
-		inputValue=document.getElementById(table+'-1').value;
+		inputValue=document.getElementById(table+'-1').value.trim();
 		if(isNaN(inputValue) || inputValue=="" || ( ( inputValue.indexOf(' ')==0 && inputValue.length-1==0 ) || ( inputValue.indexOf(' ')==inputValue.length-1 && inputValue.length-1==0 ) ) )return false;
 	}
 	return true;
