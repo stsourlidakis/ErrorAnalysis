@@ -277,12 +277,11 @@ function hide_info() {
 	}
 }
 function toggle_info(id) {
-	if(id==active || isNaN(id))	{	//Toggle info only for the active table
-		var element = document.getElementById('info-'+id);
-		document.getElementById('info-'+id).style.height = element.style.height=="0px"?"auto":"0px";
-		document.getElementById('info-'+id).style.opacity = element.style.opacity=="0"?"1":"0";
-		if(document.getElementById('info-'+id).style.opacity != "0")
-			actionLogger.log("access", logItems['info-'+id]);
+	var element = document.getElementById('info-'+id);
+	document.getElementById('info-'+id).style.height = element.style.height=="0px"?"auto":"0px";
+	document.getElementById('info-'+id).style.opacity = element.style.opacity=="0"?"1":"0";
+	if(document.getElementById('info-'+id).style.opacity != "0"){
+		actionLogger.log("access", logItems['info-'+id]);
 	}
 }
 function disable_error_buttons() {
